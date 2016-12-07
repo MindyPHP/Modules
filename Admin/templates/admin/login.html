@@ -1,0 +1,17 @@
+{% extends 'admin/base_login.html' %}
+
+{% block content %}
+    <div class="login--container">
+        <div class="row">
+            <div class="columns large-12">
+                <h1>{{ t('Login', 'admin') }}</h1>
+
+                <form action="" method="post" class="form--main">
+                    {% csrf_token %}
+                    {{ form|safe }}
+                    <button type="submit" class="ui button fluid tiny primary">{{ t('Login', 'admin') }}</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+{% if modelPk %}
+    <section id="{{ id }}" class="files-frop">
+        <p class="info">{{ t('Drop files here or click to upload manually', 'files') }}</p>
+        <p class="files-upload-icon"><i class="icon cloud upload"></i></p>
+        <div class="progress">
+            <div class="meter progress_bar"></div>
+        </div>
+    </section>
+
+    <section class="files-content" id="{{ contentId }}">
+        <ul class="image-field-list" id="{{ filesId }}">
+            {% for item in items %}
+                <li data-pk="{{ item.pk }}">
+                    <div class="file-item"
+                         style="background-image: url({{ item.getField(fileField).url }})">
+                        <span class="remove">&times;</span>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <p class="empty-info {% if items|length > 0 %}hide{% endif %}">{{ t('There are no files here', 'files') }}</p>
+    </section>
+    <script type='text/javascript'>
+        $('#{{ id }}').filesField({{ data|raw }});
+    </script>
+{% else %}
+    {{ t('For upload files please save the model', 'files') }}
+{% endif %}

@@ -1,0 +1,203 @@
+{% extends 'base.html' %}
+
+{% block header %}
+    <section class="row crm-header">
+        <section class="column large-5">
+            <section class="name">
+                Клиенты (<span id="selected">0</span> выбрано)
+
+                <select name="" id="actions">
+                    <option value="" disabled="disabled" selected="selected">
+                        Действия
+                    </option>
+                    {% for url, name in actions %}
+                    <option value="{{ url }}">
+                        {{ name }}
+                    </option>
+                    {% endfor %}
+                </select>
+
+
+            </section>
+        </section>
+
+        <section class="column large-7 text-right">
+            {% set first = months|first %}
+            {% set last = months|last %}
+
+            <a class="prev" href="{% url 'crm.index' %}?dateTo={{ prev }}">
+                <i class="icon-leftv"></i>
+            </a>
+
+            {{ first.month }}.{{ first.year }} - {{ last.month }}.{{ last.year }}
+
+            <a class="next" href="{% url 'crm.index' %}?dateTo={{ next }}">
+                <i class="icon-rightv"></i>
+            </a>
+        </section>
+    </section>
+{% endblock %}
+
+{% block content %}
+    <section class="crm-index">
+        <table class="payment-crm-table">
+            <thead>
+                <tr>
+                    <td class="project-name">
+                        <input type="checkbox" id="checkall"/>
+
+                        Наименование
+                    </td>
+
+                    {% for month in months %}
+                        <td colspan="2" class="border-bold-left border-bold-right">
+                            {{ month.month }}.{{ month.year }}
+                        </td>
+                    {% endfor %}
+                </tr>
+                <tr>
+                    <td class="project-name search-cell">
+                        <input type="text" name="search" id="search" class="find-project"/>
+                    </td>
+
+                    {% for month in months %}
+                        <td class="border-bold-left">
+                            Акты
+                        </td>
+                        <td class="border-bold-right">
+                            Оплаты
+                        </td>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tfoot>
+                <tr>
+                    <td rowspan="2" class="project-name">
+                        Итого собрано:
+                    </td>
+
+                    {% for month in months %}
+                        <td colspan="2" data-month="{{ month.full }}" class="border-bold-left border-bold-right">
+                            {{ month.collected }} из
+                            {{ month.expected }}
+                        </td>
+                    {% endfor %}
+                </tr>
+            </tfoot>
+            <tbody>
+            {% for project in projects %}
+                <tr class="project-row">
+                    <td class="project-name">
+                        <input type="checkbox" value="{{ project.id }}" name="projects[]"/>
+                        <a class="project-link mmodal" href="{% url 'crm.project' project.id %}">
+                            {{ project.name }}
+                        </a>
+                    </td>
+
+                    {% for month in project.months %}
+                        <td data-id="request-{{ project.id }}-{{ month.month.full }}" data-month="{{ month.month.full }}"
+                            class="border-bold-left request-cell {% if not month.subscribe %}no-subscribe{% else %}{% if not month.request %}no-request{% else %}{% if month.request.status == 1 %}sent{% else %}received{% endif %}{% endif %}{% endif %}">
+                            {% if month.subscribe %}
+                                {% include 'crm/_request_button.html' with [month=>month.month,subscribe=>month.subscribe,request=>month.request] %}
+                            {% endif %}
+                        </td>
+                        <td data-id="pay-{{ project.id }}-{{ month.month.full }}" data-month="{{ month.month.full }}"
+                            class="border-bold-right pay-cell {% if not month.subscribe %}no-subscribe{% else %}{% if not month.payment %}no-pay{% else %}paid{% endif %}{% endif %}">
+                            {% if month.subscribe %}
+                                {% include 'crm/_payment_button.html' with [month=>month.month,subscribe=>month.subscribe,payment=>month.payment] %}
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </section>
+{% endblock %}
+
+{% block js %}
+    <script>
+        function updateCell($cell) {
+            var id = $cell.data('id');
+            var month = $cell.data('month');
+            var $footCell = $('tfoot').find('td[data-month="' + month + '"]');
+            $.ajax({
+                'url': window.location.href,
+                'type': 'get',
+                'success': function(data){
+                    $cell.replaceWith($(data).find('td[data-id="' + id + '"]'));
+                    $footCell.replaceWith($(data).find('tfoot td[data-month="' + month + '"]'));
+                }
+            });
+        }
+
+        $(function(){
+            var payUrl = "{% url 'crm.pay' %}";
+            var requestUrl = "{% url 'crm.request' %}";
+            var csrfName = "{{ request.csrf.csrfTokenName }}";
+            var csrf =  "{{ request.csrf.getCsrfToken() }}";
+
+            $(document).on('click', '.pay-button', function(e){
+                e.preventDefault();
+                var $this = $(this);
+                var $cell = $this.closest('td');
+
+                var data = $this.data();
+                data[csrfName] = csrf;
+
+                $.ajax({
+                    'url': payUrl,
+                    'data': data,
+                    'type': 'post',
+                    'success': function(){
+                        updateCell($cell);
+                    }
+                });
+                return false;
+            });
+
+            $(document).on('click', '.request-button', function(e){
+                e.preventDefault();
+                var $this = $(this);
+                var $cell = $this.closest('td');
+
+                var data = $this.data();
+                data[csrfName] = csrf;
+
+                $.ajax({
+                    'url': requestUrl,
+                    'data': data,
+                    'type': 'post',
+                    'success': function(){
+                        updateCell($cell);
+                    }
+                });
+                return false;
+            });
+
+            $('#checkall').on('change', function(e){
+                e.preventDefault();
+                var checked = $(this).prop('checked');
+
+                $('.project-name input').each(function(){
+                    $(this).prop('checked', !!checked);
+                });
+
+                return false;
+            });
+
+            $('.project-name input').on('change', function(){
+                $('#selected').text($('.project-name input[name="projects\[\]"]:checked').length);
+            });
+
+            $('#actions').on('change', function(e){
+                e.preventDefault();
+                var url = $(this).val();
+                var data = $('.project-name input[name="projects\[\]"]:checked').serialize();
+                url = url + '?' + data;
+                window.open(url,'_blank');
+                return false;
+            });
+        });
+    </script>
+{% endblock %}

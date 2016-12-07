@@ -1,0 +1,40 @@
+{% extends "video/base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="columns small-12">
+            <h1>Видеогалерея</h1>
+
+            {% for chunk_models in models|chunk(4) %}
+                <ul class="video-list medium-block-grid-4">
+                    {% for model in chunk_models %}
+                        <li>
+                            <section class="video-item">
+                                <section class="video-image">
+                                    <a href="#" data-id="{{ model.pk }}">
+                                        <img src="{{ model.thumbnail }}" alt="{{ model }}"/>
+                                    </a>
+                                </section>
+                                <p>
+                                    <a href="#" data-id="{{ model.pk }}">
+                                        <span class="name">{{ model.name }}</span><br/>
+                                        <span class="description">{{ model.description }}</span>
+                                    </a>
+                                </p>
+                            </section>
+                        </li>
+                    {% endfor %}
+                </ul>
+                {% for model in chunk_models %}
+                    <section id="video{{ model.pk }}" class="video-item-video">
+                        <a href="#" class="video-close" title="Закрыть" rel="tooltip">&times;</a>
+                        <p class="video-title">{{ model.name }}</p>
+                        {{ model.video_978x600|safe }}
+                    </section>
+                {% endfor %}
+            {% endfor %}
+
+            {{ pager.render() }}
+        </div>
+    </div>
+{% endblock %}

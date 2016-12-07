@@ -1,0 +1,14 @@
+<a href="#" class="pay-button" data-subscribe="{{ subscribe.id }}"
+   data-month="{{ month.month }}" data-year="{{ month.year }}"
+   {% if payment %}data-payment="{{ payment.id }}"{% endif %}>
+    <span class="hide-on-hover">
+        {{ subscribe.price|number_format(0, '', '') }}
+    </span>
+    <span class="on-hover">
+        {% if not payment %}
+            +
+        {% else %}
+            &times;
+        {% endif %}
+    </span>
+</a>

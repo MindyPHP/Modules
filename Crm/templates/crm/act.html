@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+
+        .text-right {
+            text-align: right;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .expand {
+            width: 100%;
+        }
+
+        .underline {
+            text-decoration: underline;
+        }
+
+        .title {
+            font-weight: bold;
+            line-height: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+            line-height: 8px;
+        }
+
+        .works .first {
+            width: 10%;
+        }
+
+        .works .name {
+            width: 60%;
+        }
+
+        .works .price {
+            width: 30%;
+        }
+
+        .info {
+            font-style: italic;
+        }
+
+        .footer td {
+            width: 50%;
+        }
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        {% set timestamp = project.date_contract|date('U') %}
+
+        <div class="header text-right"><!--
+            -->Приложение к договору № {{ project.number_contract }} <br/>
+            от {{ formatter.format('d MMMM yyyy', timestamp)}} г.<!--
+        --></div>
+
+        &nbsp;<br/>&nbsp;<br/>&nbsp;<br/>
+
+        <div class="title text-center"><!--
+            -->Акт сдачи-приемки
+        </div>
+        <div class="subtitle"><!--
+            -->к договору оказания услуг по контентному обслуживанию веб-сайта
+        </div>
+
+        &nbsp;<br/>&nbsp;<br/>
+
+        <table class="expand city-date">
+            <tr>
+                <td>
+                    г. Киров
+                </td>
+                <td class="text-right">
+                    &laquo;{{ date.format('t') }}&raquo; {{ formatter.format('MMMM', date.getTimestamp()) }} {{ date.format('Y') }} г.
+                </td>
+            </tr>
+        </table>
+
+        &nbsp;<br/>&nbsp;<br/>
+
+        <div class="parties"><!--
+         -->Исполнитель: Индивидуальный предприниматель Фалалеев Максим Сергеевич <br/>
+            Заказчик: {{ project.customer_fullname }}
+        </div>
+
+        &nbsp;<br/>&nbsp;<br/>
+
+        <table class="expand works" border="1" cellpadding="2">
+            <tr class="head">
+                <td class="first text-center"><!--
+                 -->№
+                </td>
+                <td class="name text-center"><!--
+                 -->Наменование работ (услуг)
+                </td>
+                <td class="price text-center"><!--
+                 -->Стоимость
+                </td>
+            </tr>
+            <tr class="row">
+                <td class="first text-center"><!--
+                 -->1
+                </td>
+                <td class="name"><!--
+                 -->Техническое и контентное обслуживание веб-сайта ({{ formatter.format('LLLL', date.getTimestamp()) }})
+                </td>
+                <td class="price text-center"><!--
+                 -->{{ subscription.price|number_format(0, ',', ' ') }} руб. {{ "%02d"|format(subscription.price * 100 % 100) }} коп.
+                </td>
+            </tr>
+            <tr class="row">
+                <td class="summary text-right" colspan="2"><!--
+                 -->ИТОГО
+                </td>
+                <td class="price text-center"><!--
+                 -->{{ subscription.price|number_format(0, ',', ' ') }} руб. {{ "%02d"|format(subscription.price * 100 % 100) }} коп.
+                </td>
+            </tr>
+        </table>
+
+        &nbsp;<br/>
+
+        <div class="total"><!--
+         -->Всего оказано услуг на сумму: {{ subscription.price|humanizePrice }}.
+        </div>
+
+        &nbsp;<br/>
+
+        <div class="info"><!--
+          -->Все вышеперечисленные работы (услуги) выполнены полностью и в срок с
+            &laquo;1&raquo; {{ formatter.format('MMMM', date.getTimestamp()) }} {{ date.format('Y') }} года по
+            &laquo;{{ date.format('t') }}&raquo; {{ formatter.format('MMMM', date.getTimestamp()) }} {{ date.format('Y') }} года.
+            <br/>
+            Заказчик претензий по объему, качеству и срокам оказания услуг претензий не имеет.
+        </div>
+
+        &nbsp;<br/> &nbsp;<br/> &nbsp;<br/> &nbsp;<br/> &nbsp;<br/>
+
+        <table class="expand footer" style="width: 106%;" cellpadding="0">
+            <tr>
+                <td>Исполнитель
+                    <br/>
+                    <span class="underline" style="width: 100px;">
+                        {% for i in range(0,20) %}
+                            &nbsp;
+                        {% endfor %}
+                    </span>
+                    /Фалалеев М.С./
+                    <br/>
+                    м.п.
+                </td>
+                <td>Заказчик
+                    <br/>
+                    <span class="underline" style="width: 100px;">
+                        {% for i in range(0,20) %}
+                            &nbsp;
+                        {% endfor %}
+                    </span>
+                    /{{ project.customer_name }}/
+                    <br/>
+                    м.п.
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

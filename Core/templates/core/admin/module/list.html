@@ -1,0 +1,26 @@
+{% extends "admin/base.html" %}
+
+{% block heading %}
+    <h1>{{ t('Modules', 'core') }}</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="table--container__main">
+        <table id="main-table">
+            <thead>
+            <tr>
+                <th>{{ t('Name', 'core') }}</th>
+                <th>{{ t('Version', 'core') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for module in modules %}
+                <tr>
+                    <td>{{ module.name }}</td>
+                    <td>{{ module.version }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

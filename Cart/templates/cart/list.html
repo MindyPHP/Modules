@@ -1,0 +1,44 @@
+{% extends "cart/base.html" %}
+
+{% block content %}
+    <h1>{{ t('Cart', 'cart') }}</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <th>{{ t('Name', 'cart') }}</th>
+                <th>{{ t('Quantity', 'cart') }}</th>
+                <th>{{ t('Attributes', 'cart') }}</th>
+                <th>{{ t('Price', 'cart') }}</th>
+                <th>{{ t('Actions', 'cart') }}</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, position in items %}
+            <tr>
+                <td>
+                    {{ position.object }}
+                </td>
+                <td>
+                    <a href="{% url 'cart:quantity_decrease' key %}">-</a>
+                    <a href="{% url 'cart:quantity' key 2 %}">{{ position.quantity }}</a>
+                    <a href="{% url 'cart:quantity_increase' key %}">+</a>
+                </td>
+                <td>
+                    {% for name, value in position.data %}
+                        <p>{{ name }}: {{ value }}</p>
+                    {% endfor %}
+                </td>
+                <td>
+                    {{ position.price }} рублей
+                </td>
+                <td>
+                    <a href="{% url 'cart:delete' key %}" title="{{ t('Delete', 'cart') }}">{{ t('Delete', 'cart') }}</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <p>{{ t("Total price", 'cart') }}: {{ total }}</p>
+{% endblock %}

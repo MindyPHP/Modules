@@ -1,0 +1,19 @@
+<ul class="comment-list">
+    {% for comment in comments %}
+        <li {% if comment.level %}style="margin-left: {{ comment.level * 2 }}0px;"{% endif %}>
+            <a href="{{ comment.pk }}" name="{{ comment.pk }}"></a>
+            <p class="title">{% if comment.username %}{{ comment.username|e }}{% else %}{{ comment.user.username }}{% endif %}</p>
+            <section class="comment">
+                {{ comment.comment|e }}
+            </section>
+        </li>
+    {% endfor %}
+</ul>
+
+{{ pager.render() }}
+
+<form method="post" action="{% url 'solutions.comment_send' model.pk %}?_next={{ request.path }}">
+    {% csrf_token %}
+    {{ form|raw }}
+    <input type="submit" value="Отправить"/>
+</form>

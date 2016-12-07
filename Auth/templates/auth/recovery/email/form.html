@@ -1,0 +1,18 @@
+{% extends "auth/base.html" %}
+
+{% block breadcrumbs %}
+    {% set this.breadcrumbs = [['name' => t('Lost password?', 'auth')]] %}
+    {% parent %}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ t('Lost password?', 'auth') }}</h1>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.render()|safe }}
+        <div class="form-row">
+            <input type="submit" value="{{ t('Send', 'auth') }}"/>
+        </div>
+    </form>
+{% endblock %}

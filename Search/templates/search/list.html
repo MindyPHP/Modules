@@ -1,0 +1,16 @@
+{% extends "search/base.html" %}
+
+{% block content %}
+    <h1>{{ t('Search results', 'search') }}</h1>
+
+    <form action="{% url 'search:search' %}">
+        <input type="search" value="{{ request.get.get('q', '') }}" name="q"/>
+        <input type="submit" class="button" value="{{ t('Search', 'search') }}"/>
+    </form>
+
+    <ul class="no-bullet product-list-search-result">
+        {%- for item in results -%}
+            <li>{% include "search/types/" ~ item.getType() ~ ".html" with ['item' => item] %}</li>
+        {%- endfor -%}
+    </ul>
+{% endblock %}

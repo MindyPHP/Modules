@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="column large-12">
+        <ul class="large-block-grid-4 advantages-list">
+            {% for advantage in advantages %}
+                <li>
+                    <section class="advantage">
+                        <div class="advantage-image" style="background-image: url('{{ advantage.image.url }}')"></div>
+
+                        <div class="advantage-content">
+                            {{ advantage.content|safe }}
+                        </div>
+                    </section>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>

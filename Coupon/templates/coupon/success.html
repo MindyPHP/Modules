@@ -1,0 +1,9 @@
+{% extends request.is_ajax ? "ajax.html" : "base.html" %}
+
+{% block content %}
+    <h1>Заявка на купон успешно принята</h1>
+
+    <p>Ваш купон: {{ model }}</p>
+
+    <p>Купон так же отправлен на электронную почту</p>
+{% endblock %}

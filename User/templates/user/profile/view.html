@@ -1,0 +1,25 @@
+{% extends "user/base.html" %}
+
+{% block content %}
+    <h1>{{ model }}</h1>
+
+    <table>
+        <tr>
+            <th>{{ t('Username', 'user') }}</th>
+            <td>{{ model.username }}</td>
+        </tr>
+        <tr>
+            <th>{{ t('Email', 'user') }}</th>
+            <td>{{ model.email }}</td>
+        </tr>
+        <tr>
+            <th>{{ t('Last login', 'user') }}</th>
+            <td>{{ model.last_login|date }}</td>
+        </tr>
+    </table>
+
+    <p>
+        <a class="button" href="{% url 'auth:change_password' %}">{{ t('Change password', 'user') }}</a>
+        <a class="button" href="{% url 'auth:logout' %}">{{ t('Logout', 'user') }}</a>
+    </p>
+{% endblock %}

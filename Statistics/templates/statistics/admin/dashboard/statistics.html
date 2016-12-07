@@ -1,0 +1,23 @@
+<div class="dashboard-widget">
+    <p class="dashboard-title">{{ t('Statistics', 'statistics') }}</p>
+
+    <div class="dashboard-statistics-widget">
+        <div class="statistics-chart"></div>
+    </div>
+    <script type="text/javascript">
+        new Chartist.Line('.statistics-chart', {{ options|safe }}, {
+            fullWidth: true,
+            low: 0,
+            showArea: true,
+            chartPadding: {},
+            plugins: [
+                Chartist.plugins.legend({
+                    legendNames: [
+                        '{{ t('Hits', 'statistics') }}',
+                        '{{ t('Unique visitors', 'statistics') }}'
+                    ]
+                })
+            ]
+        });
+    </script>
+</div>

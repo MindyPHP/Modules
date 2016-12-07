@@ -1,0 +1,13 @@
+<?php
+
+namespace Modules\{{ module }}\Controllers;
+
+use Modules\Core\Controllers\FrontendController;
+
+class {{ name }}Controller extends FrontendController
+{
+	public function actionIndex()
+	{
+		echo $this->render("{{ module }}/{{ name }}/index.html");
+	}
+}

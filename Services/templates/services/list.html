@@ -1,0 +1,8 @@
+{% extends request.isAjax ? "ajax.html" : "services/base.html" %}
+
+{% block content %}
+    <h1>Услуги</h1>
+    {% for model in models %}
+        {{ model }}
+    {% endfor %}
+{% endblock %}

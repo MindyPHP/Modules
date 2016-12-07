@@ -1,0 +1,17 @@
+<div class="blog-item">
+    <time datetime="{{ model.published_at }}">{{ model.published_at|humanizeDateTime }}</time>
+    <h2><a href="{{ model.getAbsoluteUrl() }}">{{ model.name }}</a></h2>
+    <article class="blog-content short">
+        {{ model.content_short }}
+    </article>
+    <ul class="blog-panel">
+        <li>
+            <a href="{{ model.getAbsoluteUrl() }}" class="ui button primary tiny">Подробнее...</a>
+        </li>
+        <li>
+            <p class="blog-comment">
+                <a href="{{ model.getAbsoluteUrl() }}#comments"><i class="icon comment"></i>{{ model.comments.count() }}</a>
+            </p>
+        </li>
+    </ul>
+</div>

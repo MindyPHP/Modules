@@ -1,0 +1,111 @@
+<section class="rotator">
+    {% for slide in slides|slice(0,5) %}
+        <section class="rotator-item {% if loop.first %}active{% endif %}" style="background-image: url('{{ slide.image.url }}')" id="slide-{{ slide.id }}">
+            <section class="row">
+                <section class="column large-7"></section>
+                <section class="column large-5 description-column">
+                    <section class="multiline">
+                        <section class="rotator-title">
+                            {{ slide.title }}
+                        </section>
+                        <section class="rotator-description">
+                            {{ slide.description }}
+                        </section>
+                        <section class="rotator-actions">
+                            {% if slide.action_first and slide.action_first_url %}
+                                <a class="rotator-action-first button round" href="{{ slide.action_first_url }}">
+                                    {{ slide.action_first }}
+                                </a>
+                            {% endif %}
+
+                            {% if slide.action_first and slide.action_first_url and slide.action_second and slide.action_second_url %}
+                                <span class="or">
+                                    или
+                                </span>
+                            {% endif %}
+
+                            {% if slide.action_second and slide.action_second_url %}
+                                <a class="rotator-action-second" href="{{ slide.action_second_url }}">
+                                    {{ slide.action_second }}
+                                </a>
+                            {% endif %}
+                        </section>
+                    </section>
+                </section>
+            </section>
+
+        </section>
+    {% endfor %}
+</section>
+<section class="rotator-actions-line">
+    <section class="row">
+        <section class="column large-12">
+            {% for slide in slides|slice(0,5) %}
+                <a class="rotator-button {% if loop.first %}active{% endif %}" href="#slide-{{ slide.id }}">
+                    <span class="rotator-image-holder">
+                        <img src="{{ slide.thumb_image.url }}" class="rotator-image" alt=""/>
+                        <img src="{{ slide.thumb_image_hover.url }}" class="rotator-image-hover" alt=""/>
+                    </span>
+
+                    <span class="slide-name">
+                        <span class="multiline">
+                            {{ slide.name }}
+                        </span>
+                    </span>
+                </a>
+            {% endfor %}
+        </section>
+    </section>
+</section>
+<script>
+    $(function(){
+        var timer;
+
+        function nextItem() {
+            var $next = $('.rotator-button.active').next('.rotator-button');
+            if (!$next.length) {
+                $next = $($('.rotator-button').first());
+            }
+            $next.trigger('mouseenter');
+        }
+
+        $('.rotator-button').on('mouseenter', function(e){
+            var $item = $($(this).attr('href'));
+            if (!$item.hasClass('active')) {
+                $('.rotator-item').not($item).removeClass('active');
+
+                $item.addClass('active');
+
+                $('.rotator-button').not($(this)).removeClass('active');
+                $(this).addClass('active');
+
+                clearTimeout(timer);
+                timer = setTimeout(function(){
+                    nextItem();
+                }, 5000);
+            }
+        }).on('click', function(e){
+            e.preventDefault();
+            $(this).trigger('mouseenter');
+            return false;
+        });
+
+        timer = setTimeout(function(){
+            nextItem();
+        }, 5000);
+
+        $('.rotator-item').on('click', function(e){
+            var $target = $(e.target);
+
+            if (!$target.is('a')) {
+                e.preventDefault();
+                var $a = $(this).find('a');
+                if ($a.length) {
+                    window.location = $($a.first()).attr('href');
+                }
+                return false;
+            }
+            return e;
+        });
+    });
+</script>

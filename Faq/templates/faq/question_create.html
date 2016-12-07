@@ -1,0 +1,11 @@
+{% extends "faq/base.html" %}
+
+{% block content %}
+    <h1>{{ t('Add question', 'faq') }}</h1>
+
+    <form action="{% url 'faq:question_create' %}" method="post">
+        {% csrf_token %}
+        {{ form|safe }}
+        <input type="submit" value="{{ t('Send', 'faq') }}"/>
+    </form>
+{% endblock %}

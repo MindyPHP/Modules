@@ -1,0 +1,11 @@
+{% extends "solutions/base.html" %}
+
+{% block content %}
+    <h1>Решения</h1>
+
+    <ul>
+        {% for model in models %}
+            <li><a href="{{ model.getAbsoluteUrl() }}">{{ model }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

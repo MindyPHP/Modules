@@ -1,0 +1,8 @@
+{% for item in items %}
+    <li class="{% if item.items %}has-subitems {% endif %} {% if item.root == selected.root and item.level < selected.level or item.id == selected.id %}active{% endif %}">
+        <a href="{% url 'goods:category' item.url %}">{{ item.name }}</a>
+        {% if item.items %}
+            <ul>{% include "goods/_tree_menu.html" with ['items' => item.items, 'selected' => selected] %}</ul>
+        {% endif %}
+    </li>
+{% endfor %}

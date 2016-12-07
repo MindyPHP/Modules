@@ -1,0 +1,133 @@
+<ul id="{{ id }}-selected-list" class="no-bullet"></ul>
+
+<textarea name="{{ name }}" id="{{ id }}" cols="30" rows="10" style="display: none;">{{ data|raw }}</textarea>
+
+<script>
+    $(function(){
+        var area = "#{{ id }}";
+        var list = "#{{ id }}-selected-list";
+        var watch =  '#{{ watch }}';
+
+        var fields = {{ fields|raw }};
+        var data = {{ data|raw }};
+
+        function init() {
+            $(list).html('');
+            $.each(data, function(pk, values) {
+                if (pk == 'rewrite') {
+                    return true;
+                }
+                appendField(pk, values.value, true);
+            });
+        }
+        init();
+
+        $(list).on('change', 'select, input', function(e){
+            save();
+        });
+
+        $(list).on('keyup', 'input', function(e){
+            save();
+        });
+
+        $(watch).on('change', function(e){
+            var val = $(this).val();
+            $.ajax({
+                'url': window.location.href,
+                'data': {
+                    'relation': val
+                },
+                'success': function(result){
+                    var json = $(result).find(area).val();
+                    data = JSON.parse(json);
+                    init();
+                }
+            })
+        });
+
+        function appendField(pk, value, set_value)
+        {
+            var field = fields[pk];
+            var type = parseInt(field.type, 10);
+            var input = null;
+
+            switch (type) {
+                case 1:
+                    input = renderChar(field, value);
+                    break;
+                case 2:
+                    input = renderList(field, value);
+                    break;
+                case 3:
+                    input = renderChar(field, value);
+                    break;
+                case 4:
+                    input = renderCheckbox(field, set_value ? value : true);
+                    break;
+            }
+
+            var item = $('<li data-id="' + field.id + '"/>');
+            var label = $('<label/>').attr('for', 'custom-field-' + field.id).text(field.name);
+
+            item.append(label);
+            item.append(input);
+
+            $(list).append(item);
+
+            save();
+        }
+
+        function renderList(field, value)
+        {
+            var list = field.list;
+            var $select = $('<select/>').attr('id', 'custom-field-' + field.id);
+            $.each(list, function(value, name){
+                $select.append($('<option/>').attr('value', value).text(name));
+            });
+            if (value) {
+                $select.val(value);
+            }
+            return $select;
+        }
+
+        function renderChar(field, value)
+        {
+            var $input = $('<input type="text"/>').attr('id', 'custom-field-' + field.id);
+            if (value) {
+                $input.val(value);
+            }
+            return $input;
+        }
+
+        function renderCheckbox(field, value)
+        {
+            var $input = $('<input type="checkbox" value="1" checked="checked"/>').attr('id', 'custom-field-' + field.id);
+            if (!value) {
+                $input.removeAttr('checked');
+            }
+            return $input;
+        }
+
+        function save()
+        {
+            var raw = {
+                'rewrite': true
+            };
+            $(list).find('li').each(function(item){
+                var li = $(this);
+                var id = li.data('id');
+                var input = li.find('input, select');
+                var value = '';
+                if (input.attr('type') == 'checkbox') {
+                    value = input.is(':checked');
+                } else {
+                    value = input.val();
+                }
+                raw[id] = {
+                    'value': value
+                }
+            });
+            $(area).val(JSON.stringify(raw));
+        }
+    })
+</script>

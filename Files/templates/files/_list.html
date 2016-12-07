@@ -1,0 +1,60 @@
+<div class="table--container__main">
+    <table id="table-main" class="files">
+        <thead>
+        <tr>
+            <th class="check all"></th>
+            <th class="sorting"></th>
+            <th>{{ t('Name', 'files') }}</th>
+            <th class="actions" align="right"></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if parent %}
+            <tr class="dir">
+                <td class="file-check">
+
+                </td>
+                <td class="file-icon">
+                    <i class="icon folder"></i>
+                </td>
+                <td class="file-name">
+                    {% if parent == '.' %}
+                        <a href="{% url 'files:index' %}?path={{ parent }}">....</a>
+                    {% else %}
+                        <a href="{% url 'files:index' %}">....</a>
+                    {% endif %}
+                </td>
+                <td class="file-actions"></td>
+            </tr>
+        {% endif %}
+
+        {% for item in items %}
+            <tr class="dir">
+                <td class="check">
+                    <input class="delete-checker" type="checkbox" name="deleteFiles[]"
+                           value="{{ item.path }}"/>
+                </td>
+                <td class="sorting">
+                    {% if item.type == 'dir' %}
+                        <i class="icon folder"></i>
+                    {% else %}
+                        <i class="icon file outline"></i>
+                    {% endif %}
+                </td>
+                <td class="file-name">
+                    {% if item.type == 'dir' %}
+                        <a href="{% url 'files:index' %}?path={{ item.path }}">{{ item.basename }}</a>
+                    {% else %}
+                        <a href="{{ storage.url(item.path) }}" target="_blank">{{ item.basename }}</a>
+                    {% endif %}
+                </td>
+                <td class="actions" align="right">
+                    <a href="{% url 'files:remove' %}?path={{ item.path }}" class="delete-link">
+                        <i class="icon trash"></i>
+                    </a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>

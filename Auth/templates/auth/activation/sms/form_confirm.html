@@ -1,0 +1,13 @@
+{% extends "auth/base.html" %}
+
+{% block content %}
+    <h1>{{ t('Activation', 'auth') }}</h1>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.render()|safe }}
+        <div class="form-row">
+            <input type="submit" value="{{ t('Send activation info', 'auth') }}"/>
+        </div>
+    </form>
+{% endblock %}

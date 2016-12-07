@@ -1,0 +1,18 @@
+{% extends "blog/base.html" %}
+
+
+{% block content %}
+    <h1>{{ model.name }}</h1>
+
+    <div class="blog-container">
+        {% for model in models %}
+            {% include "blog/_post.html" %}
+        {% else %}
+            {{ t('Posts not found', 'blog') }}
+        {% endfor %}
+
+        <div class="pager-holder">
+            {{ pager|safe }}
+        </div>
+    </div>
+{% endblock %}

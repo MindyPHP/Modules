@@ -1,0 +1,92 @@
+{% if not instance or not instance.pk %}
+    {{ t('Please, save object for editing this field', 'SortableMany') }}
+{% else %}
+<ul id="{{ id }}-selected-list" style="list-style: none;margin: 0;">
+    {% for key, item in selected %}
+        <li data-pk="{{ key }}">
+            <i class="icon-trash"></i>
+            <i class="icon-move"></i>
+            <span class="name">{{ item }}</span>
+        </li>
+    {% endfor %}
+</ul>
+
+<label for="{{ id }}-available">Добавить значения:</label>
+
+<select id="{{ id }}-available">
+    <option value=""></option>
+    {% for key, item in available %}
+        <option value="{{ key }}">
+            {{ item }}
+        </option>
+    {% endfor %}
+</select>
+
+<script>
+    $(function(){
+        var list = "#{{ id }}-selected-list";
+        var select = "#{{ id }}-available";
+
+        $(select).select2({
+            width: '100%',
+            allowClear: true,
+            placeholder: "Выберите значение"
+        });
+
+        $(document).on('click', list + ' .icon-trash', function(){
+            var item = $(this).closest('li');
+            toAvail(item.data('pk'), item.find('.name').text());
+            item.remove();
+            save();
+        });
+
+        $(document).on('change', select, function(){
+            var val = $(this).val();
+            var option = $(select).find("option[value='" + val + "']");
+            toList(option.val(), option.text());
+            option.remove();
+            $(select).val(0);
+            $(select).select2('val','');
+            save();
+        });
+
+        function toAvail(pk, name)
+        {
+            $(select).append($('<option/>').attr('value', pk).text(name));
+        }
+
+        function toList(pk, name)
+        {
+            $(list).append($('<li data-pk="' + pk +'"> <i class="icon-trash"></i> <i class="icon-move"></i> <span class="name">' + name + '</span></li>'));
+        }
+
+        function save() {
+            var data = {{ sortData|raw }};
+            var pk = [];
+            $(list).find('li').each(function(){
+                if ($(this).data('pk')) {
+                    pk.push($(this).data('pk'));
+                }
+            });
+            data['pk'] = pk;
+            $.ajax({
+                'type': 'post',
+                'url': "{{ sortUrl|raw }}",
+                'data': data
+            });
+        }
+
+        function initList() {
+            $(list).dragsort({
+                dragSelector: "li",
+                placeHolderTemplate: "<li class='empty'></li>",
+                dragEnd: function() {
+                    save();
+                }
+            });
+        }
+
+        initList();
+    });
+</script>
+{% endif %}

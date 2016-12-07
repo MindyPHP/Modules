@@ -1,0 +1,25 @@
+{% extends request.isAjax ? 'ajax.html' : 'admin/base.html' %}
+
+{% block heading %}
+    <h1>{{ t('Settings center', 'admin') }}</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="form--main settings-container">
+        {% if models|is_empty %}
+            <p>Настройки отсутствуют</p>
+        {% else %}
+            <form action="{% url 'admin:settings' %}" method="post" enctype="multipart/form-data">
+                {% for _, data in models %}
+                    <div class="settings-item">
+                        <p class="settings-title">{{ data.model }}</p>
+                        {% csrf_token %}
+                        {{ data.form|safe }}
+
+                    </div>
+                {% endfor %}
+                <input type="submit" value="Сохранить" class="ui button tiny blue"/>
+            </form>
+        {% endif %}
+    </div>
+{% endblock %}

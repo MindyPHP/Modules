@@ -1,0 +1,12 @@
+{% extends request.isAjax ? "ajax.html" : "user/base.html" %}
+
+{% block content %}
+    <h1>{{ model }}</h1>
+
+    <table>
+        <tr>
+            <th>{{ t('Last login', 'user') }}</th>
+            <td>{{ model.last_login|date }}</td>
+        </tr>
+    </table>
+{% endblock %}

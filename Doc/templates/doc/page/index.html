@@ -1,0 +1,21 @@
+{% extends "doc/page/base.html" %}
+
+{% block content %}
+    <h1>{{ t('Index', 'doc') }}</h1>
+
+    {% if models|length > 0 %}
+    <ul class="no-bullet">
+        {% for model in models %}
+            <li style="padding-left: {{ model.url|substr_count('/') * 2 }}0px;">
+                <a href="{% url 'doc:view' model.url %}">{{ model.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+        {{ t('No documentation yet', 'core') }}
+    {% endif %}
+
+    <h2>{{ t('Class reference', 'doc') }}</h2>
+
+    <a href="{% url 'doc:api_view' 'index' %}">{{ t('Class reference', 'doc') }}</a>
+{% endblock %}

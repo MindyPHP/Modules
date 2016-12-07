@@ -1,0 +1,11 @@
+{% extends "forum/base.html" %}
+
+{% block content %}
+    <h1>{{ t('Update post: {name}', 'forum', ['{name}' => model]) }}</h1>
+
+    <form action="{% url 'forum:post_update' model.pk %}" method="post">
+        {% csrf_token %}
+        {{ form|safe }}
+        <input type="submit" value="{{ t('Save', 'forum') }}" class="link-button" />
+    </form>
+{% endblock %}

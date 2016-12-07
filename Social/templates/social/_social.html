@@ -1,0 +1,9 @@
+<ul class="social__auth">{% spaceless %}
+    {% for name in providers %}
+        <li class="social__auth--item {{ name }}">
+            <a rel="nofollow" target="_blank" href="{% url 'social:auth' name %}">
+                <i class="social-{{ name }}-circle"></i> {{ name }}
+            </a>
+        </li>
+    {% endfor %}
+{% endspaceless %}</ul>

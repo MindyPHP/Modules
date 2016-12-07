@@ -1,0 +1,23 @@
+{
+    "name": "mindy/contrib_files",
+    "homepage": "https://github.com/studio107/Contrib_Files",
+    "license": "MIT",
+    "minimum-stability": "dev",
+    "autoload": {
+        "psr-0": {
+            "": "src/"
+        }
+    },
+    "require": {
+        "php": ">=5.4"
+    },
+    "authors": [{
+        "name": "Maxim Falaleev",
+        "email": "max@studio107.ru",
+        "homepage": "http://studio107.ru",
+        "role": "Developer"
+    }],
+    "support": {
+        "issues": "https://github.com/studio107/Contrib_Files/issues?state=open"
+    }
+}

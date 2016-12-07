@@ -1,0 +1,23 @@
+{% extends admin.getTemplate("base.html") %}
+
+{% block breadcrumbs %}
+    {% set this.breadcrumbs = breadcrumbs %}
+    {% parent %}
+{% endblock %}
+
+{% block heading %}
+    <h1>{{ model.getAdminNames()[0] }}: {{ instance }}</h1>
+{% endblock %}
+
+{% block content %}
+    {% include admin.getTemplate('panel/_buttons.html') %}
+
+    <div class="list--container">
+        {% include admin.getTemplate('panel/_actions.html') %}
+
+        <form action="" method="post" id="main-form">
+            {% csrf_token %}
+            {% include admin.getTemplate('_table.html') %}
+        </form>
+    </div>
+{% endblock %}

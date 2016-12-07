@@ -1,0 +1,38 @@
+{% extends "places/base.html" %}
+
+{% block content %}
+    <div class="place-container">
+        <div class="place-detail">
+            <h1>{{ model }}</h1>
+
+            <p class="address">
+                <strong>Адрес: {{ model.address }}</strong><br/>
+                <a href="{% url 'places.map' model.pk %}" class="mmodal" data-width="650">Показать на карте</a>
+            </p>
+
+            <p>&nbsp;</p>
+
+            <p class="phone">{{ model.phone }}</p>
+
+            <p>&nbsp;</p>
+
+            <div class="place-article">
+                {{ model.content }}
+            </div>
+            <p><a href="{% url 'banquet.order' %}" data-width="650" class="mmodal button">Сделать предзаказ</a></p>
+        </div>
+
+        <div class="fotorama"
+             data-nav="thumbs"
+             data-height="625"
+             data-thumbmargin="10"
+             data-width="100%">
+            {% for image in model.images.all() %}
+                <a href="{{ image.image.url }}">
+                    <img src="{{ image.image.url_84x56 }}" alt="{{ model }}"
+                         width="84" height="56"/>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

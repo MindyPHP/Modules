@@ -1,0 +1,8 @@
+<script type="text/javascript">
+    if (typeof window.opener.social_auth_callback != "undefined") {
+        window.opener.social_auth_callback('{{ name }}', {{ user|safe }});
+        window.close();
+    } else {
+        window.location = '{% url app.getModule('User').userRoute %}';
+    }
+</script>

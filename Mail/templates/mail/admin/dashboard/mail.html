@@ -1,0 +1,24 @@
+<div class="dashboard-widget">
+    <p class="dashboard-title">{{ t('Mail statistics', 'Mail') }}</p>
+
+    <div class="dashboard-mail-widget">
+        <div class="ct-chart"></div>
+    </div>
+    <script type="text/javascript">
+        new Chartist.Line('.ct-chart', {{ options|safe }}, {
+            fullWidth: true,
+            low: 0,
+            showArea: true,
+            chartPadding: {},
+            plugins: [
+                Chartist.plugins.legend({
+                    legendNames: [
+                        '{{ t('Sended', 'Mail') }}',
+                        '{{ t('Readed', 'Mail') }}',
+                        '{{ t('Errors', 'Mail') }}'
+                    ]
+                })
+            ]
+        });
+    </script>
+</div>

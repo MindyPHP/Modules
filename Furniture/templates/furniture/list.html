@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% for item in furniture %}
+        Наименование: {{ item.name }}, Цена: {{ item.price }} руб.
+        <a href="{{ item.getAbsoluteUrl() }}">Подробнее</a>
+        <br/>
+    {% endfor %}
+
+    {{ pager.render('furniture/custom_pager.html')|raw }}
+{% endblock %}

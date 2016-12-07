@@ -1,0 +1,26 @@
+{% extends "admin/base.html" %}
+
+{% block heading %}
+    <h1>{{ t('Routes', 'core') }}</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="table--container__main">
+        <table id="main-table">
+            <thead>
+            <tr>
+                <th>{{ t('Route', 'core') }}</th>
+                <th>{{ t('Url', 'core') }}</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for route in routes %}
+                <tr>
+                    <td>{{ route.route }}</td>
+                    <td>{{ route.url }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

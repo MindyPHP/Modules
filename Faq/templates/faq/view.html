@@ -1,0 +1,13 @@
+{% extends request.isAjax ? "ajax.html" : "faq/base.html" %}
+
+{% block content %}
+    <h1>{{ question }}</h1>
+
+    <p>{{ question.question }}</p>
+
+    <ul>
+        {% for answer in answers %}
+            <li><a href="{{ answer.getAbsoluteUrl() }}">{{ answer }}</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

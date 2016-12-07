@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block heading %}
+    <h1>{{ model.name }}</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="goods-category">
+        <div class="row">
+            <div class="column large-3">
+                <div class="goods-menu-holder">
+                    <ul class="goods-menu no-bullet">
+                        {% include 'goods/_tree_menu.html' with ['items' => goods_categories_tree(), 'selected' => model] %}
+                    </ul>
+                </div>
+            </div>
+            <div class="column large-9">
+                <div class="goods-products-holder">
+                    <ul class="goods-products no-bullet">
+                        {% for product in products %}
+                            <li class="product first-link-click clearfix">
+                                <a class="more" href="{{ product.getAbsoluteUrl() }}">
+                                    Подробнее
+                                </a>
+                                <a href="{{ product.getAbsoluteUrl() }}" class="image-holder">
+                                    {% if product.image.url %}
+                                        <img src="{{ product.image.url_mini }}" alt=""/>
+                                    {% else %}
+                                        <img src="/static/dist/images/noimage/goods/mini.jpg" alt=""/>
+                                    {% endif %}
+                                </a>
+                                <div class="data">
+                                    <div class="title">
+                                        {{ product.name }}
+                                    </div>
+                                    <div class="info">
+                                        {{ limit(product.description, 120) }}
+                                    </div>
+                                </div>
+                            </li>
+                        {% endfor %}
+                    </ul>
+
+                    {{ pager.render('core/pager/simple.html') }}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(function(){
+            $('li.has-subitems').on('click', function(e){
+                e.preventDefault();
+                $(this).toggleClass('active');
+                return false;
+            });
+        })
+    </script>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends request.isAjax ? "ajax.html" : 'admin/base.html' %}
+
+{% block heading %}
+    <h1>{{ t('Information about', 'admin') }} {{ admin.getVerboseName()|ucfirst }}</h1>
+{% endblock %}
+
+{% block content_class %}info{% endblock %}
+
+{% block content %}
+    {% include "admin/admin/_info_table.html" %}
+
+    <p>
+        <a href="{% url 'admin:info_print' module.getId() adminClass model.pk %}" target="_blank"
+           class="window-open ui button tiny basic print-button">
+            <i class="icon print"></i> {{ t('Print', 'admin') }}
+        </a>
+    </p>
+{% endblock %}

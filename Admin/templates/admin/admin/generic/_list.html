@@ -1,0 +1,82 @@
+{% if filterForm %}
+    <form id="filter-form" action="{{ request.getPath() }}">
+        <div class="form-lines">
+            {% for input in filterForm %}
+                <div class="form-line clearfix">
+                    <div class="label-block">
+                        {{ input.renderLabel()|raw }}
+                    </div>
+                    <div class="value-block">
+                        {{ input.renderInput()|raw }}
+                        {{ input.renderErrors()|raw }}
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div class="button-line">
+            <input type="submit" class="button ui primary" value="{{ t('Search', 'admin') }}"/>
+        </div>
+    </form>
+{% endif %}
+
+{% include admin.getTemplate(admin.toolbarTemplate) %}
+
+<form action="" method="post" id="main-form">
+    {% csrf_token %}
+    {% include admin.getTemplate(admin.toolbarActionsTemplate) %}
+
+    <div class="table--container__main">
+        {{ table.render()|safe }}
+        <div class="table--loader">
+            Загрузка...
+        </div>
+    </div>
+</form>
+
+<script type="text/javascript">
+    $("#table-main.sortingColumn").find("tbody").sortable({
+        items: 'tr',
+        handle: '.sorting--container',
+        axis: 'y',
+        placeholder: "highlight",
+        helper: function (e, ui) {
+            ui.children().each(function () {
+                var $this = $(this);
+                $this.width($this.width());
+            });
+            return ui;
+        },
+        update: function (event, ui) {
+            var $to = $(ui.item),
+                    $prev = $to.prev(),
+                    $next = $to.next();
+
+            var data = $(this).sortable('toArray', {
+                attribute: 'data-pk'
+            });
+
+            $('.table--loader').show();
+
+            $.ajax({
+                data: {
+                    models: data,
+                    pk: $to.data('pk'),
+                    insertAfter: $prev.data('pk'),
+                    insertBefore: $next.data('pk'),
+                    action: 'sorting'
+                },
+                type: 'POST',
+                url: '',
+                success: function (data) {
+                    $('.table--loader').hide();
+                    $('#main-form').replaceWith(data);
+                },
+                error: function(xhr) {
+                    $('.table--loader').hide();
+                }
+            });
+        }
+    }).disableSelection();
+
+    $('table').checkboxes('range', true);
+</script>

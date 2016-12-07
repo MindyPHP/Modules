@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="demo-content">
+        <h1>Демонстрационная версия</h1>
+
+        <p>Добрый день!</p>
+
+        <p><strong>Для ознакомления с панелью администратора перейдите по <a href="{% url 'admin:index' %}">ссылке</a>.</strong></p>
+
+        <blockquote>
+            <p><strong>Логин:</strong> admin</p>
+            <p><strong>Пароль:</strong> admin</p>
+        </blockquote>
+
+        <p>Данные сбрасываются каждые 10 минут.</p>
+
+        <hr/>
+
+        <h2>Описание</h2>
+
+        <p>В данной версии системы установлены только базовые модули которые являются частью "ядра" системы поставляются
+            вместе с системой.</p>
+
+        <ul>
+            <li>
+                <strong><a target="_blank" href="http://github.com/Studio107/Pages">Pages</a></strong> - Страницы
+            </li>
+            <li>
+                <strong><a target="_blank" href="http://github.com/Studio107/Comments">Comments</a></strong> -
+                Комментарии к любому типу материалов на сайте
+            </li>
+            <li>
+                <strong><a target="_blank" href="http://github.com/Studio107/Core">Core</a></strong> - Ядро системы.
+                Обязательный модуль для работы.
+            </li>
+            <li>
+                <strong><a target="_blank" href="http://github.com/Studio107/Mail">Mail</a></strong> - Почтовый
+                компонент.
+                Хранит все отправленные письма. Мониторинг отправленных писем. Почтовые шаблоны.
+            </li>
+            <li>
+                <strong><a target="_blank" href="http://github.com/Studio107/Menu">Menu</a></strong> - Управление меню
+                на сайте.
+            </li>
+            <li>
+                <strong><a target="_blank" href="http://github.com/Studio107/Meta">Meta</a></strong> - Работа с мета
+                информацией.
+                Позволяет добавлять мета информацию к любому url адресу сайта.
+            </li>
+            <li>
+                <strong><a target="_blank" href="http://github.com/Studio107/Sites">Sites</a></strong> - Мультисайтинг.
+            </li>
+            <li>
+                <strong><a target="_blank" href="http://github.com/Studio107/User">User</a></strong> - Пользователи.
+                Группы пользователей. Управление правами доступа.
+            </li>
+            <li>
+                <strong><a target="_blank" href="http://github.com/Studio107/Redirect">Redirect</a></strong> - Работа
+                с преренаправлениями (301, 302 редиректы)
+            </li>
+            <li>
+                <strong><a target="_blank" href="http://github.com/Studio107/Files">Files</a></strong> - Работа
+                с файлами (в т.ч. с внешними облачными хранилищами)
+            </li>
+        </ul>
+
+        <p>Так же доступны 30+ (суммарно) модулей на <a href="http://github.com/Studio107">Github</a></p>
+
+        <p>Система является полностью бесплатным и открытым продуктом. Исходные коды системы доступны на <a
+                    href="http://github.com/Studio107">Github</a></p>
+    </div>
+{% endblock %}

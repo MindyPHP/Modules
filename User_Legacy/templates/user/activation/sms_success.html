@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block heading %}
+    <h1>Ваша учетная запись успешно активирована</h1>
+{% endblock %}
+
+{% block content %}
+    <p>Сейчас вы будете перенаправлены на главную страницу...</p>
+    <script type="text/javascript">
+    setTimeout(function() {
+        window.location = '/';
+    }, 3000);
+    </script>
+{% endblock %}

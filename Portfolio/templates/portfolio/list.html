@@ -1,0 +1,40 @@
+{% extends "portfolio/base.html" %}
+
+{% block breadcrumbs %}
+    {% set this.breadcrumbs = [['name' => t('Portfolio', 'Portfolio')]] %}
+    {% parent %}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="columns small-12">
+            <h1>{{ category ? category : t('Portfolio', 'Portfolio') }}</h1>
+
+            <ul class="portfolio-list medium-block-grid-4">
+                {% for model in models %}
+                    <li>
+                        <div class="portfolio-item">
+                            <div class="portfolio-image">
+                                <a href="{{ model.getAbsoluteUrl() }}">
+                                    {% if model.image.value %}
+                                        <img src="{{ model.image.image.url_220x172 }}" alt="{{ model }}"/>
+                                    {% else %}
+                                        <img src="http://placehold.it/220x172" alt=""/>
+                                    {% endif %}
+                                </a>
+                            </div>
+                            <div class="portfolio-date">{{ model.created_at }}</div>
+                            <div class="portfolio-name">
+                                <a href="{{ model.getAbsoluteUrl() }}">
+                                    <span class="name">{{ model }}</span>
+                                </a>
+                            </div>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            {{ pager.render()|safe }}
+        </div>
+    </div>
+{% endblock %}

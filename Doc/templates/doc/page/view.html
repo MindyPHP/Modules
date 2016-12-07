@@ -1,0 +1,26 @@
+{% extends "doc/page/base.html" %}
+
+{% block content %}
+    <div class="doc-content">
+        {{ model.content_html|safe }}
+    </div>
+    <hr/>
+    <div class="row doc-navigation">
+        <div class="columns large-6">
+            {% if prev %}
+                <a href="{{ prev.getAbsoluteUrl() }}">&larr; {{ prev }}</a>
+            {% else %}
+                &nbsp;
+            {% endif %}
+        </div>
+        <div class="columns large-6 text-right">
+            {% if next %}
+                <a href="{{ next.getAbsoluteUrl() }}">{{ next }} &rarr;</a>
+            {% else %}
+                &nbsp;
+            {% endif %}
+        </div>
+    </div>
+
+
+{% endblock %}

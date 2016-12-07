@@ -1,0 +1,27 @@
+<div id="dropTarget" class="forum-attach-area text-center">
+    <a href="#" id="browseButton">Browse</a> or drop files here
+</div>
+
+<script type="text/javascript">
+    var flow = new Flow({
+        target: '{% url 'forum:attachment_upload' %}',
+        chunkSize: 1024 * 1024,
+        testChunks: false
+    });
+
+    flow.assignBrowse(document.getElementById('browseButton'));
+    flow.assignDrop(document.getElementById('dropTarget'));
+
+    flow.on('filesSubmitted', function(file) {
+        flow.upload();
+    });
+    flow.on('fileAdded', function (file, event) {
+        console.log(file, event);
+    });
+    flow.on('fileSuccess', function (file, message) {
+        console.log(file, message);
+    });
+    flow.on('fileError', function (file, message) {
+        console.log(file, message);
+    });
+</script>

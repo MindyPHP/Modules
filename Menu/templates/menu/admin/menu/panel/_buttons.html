@@ -1,0 +1,34 @@
+<form action="" method="get">
+    <table class="table--toolbar">
+        <thead>
+        <tr>
+            {% if admin.can('create') %}
+                <th class="buttons">Действия</th>
+            {% endif %}
+            {% if searchFields %}
+                <th class="search">Поиск</th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            {% if admin.can('create') %}
+                <td class="buttons">
+                    <a href="{{ admin.getAdminUrl('create') }}?parent_id={{ instance.pk }}" class="button button-primary button-small">
+<i class="icon add square"></i>{{ t('Create', 'admin') }}
+                    </a>
+                </td>
+            {% endif %}
+            {% if searchFields %}
+                <td class="search">
+                    <input type="text" name="search" placeholder="{{ t('Search','admin') }}..."
+                           value="{{ request.post.get('search') }}"/>
+                    <button type="submit" class="ui button tiny primary icon">
+                        <i class="search icon"></i> {{ t('Search', 'admin') }}
+                    </button>
+                </td>
+            {% endif %}
+        </tr>
+        </tbody>
+    </table>
+</form>

@@ -1,0 +1,13 @@
+<section id="{{ listId }}">
+    <div class="multiple-content">
+        {{ table|safe }}
+    </div>
+</section>
+
+<script>
+    $(function(){
+        $('#{{ listId }}').multiple({
+            sortUrl: '{% url 'admin:list' moduleName adminClass %}'
+        });
+    })
+</script>

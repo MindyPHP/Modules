@@ -1,0 +1,184 @@
+.multiple-table {
+    width: 100%;
+    border: none;
+}
+
+.multiple-table thead {
+    border-bottom: 1px solid #f4f4f4;
+}
+
+.multiple-table thead tr th {
+    font-size: 0.8rem;
+    text-transform: capitalize;
+    color: #616161;
+}
+
+.multiple-table thead tr th:hover {
+    background-color: #f4f4f4 !important;
+}
+
+.multiple-table thead tr th a {
+    color: #616161;
+}
+
+.multiple-table thead tr th a:hover {
+    color: black;
+}
+
+.multiple-table thead tr.highlight, .multiple-table tbody tr.highlight {
+    background-color: #F39C12;
+}
+
+.multiple-table thead tr th.check, .multiple-table tbody tr td.check {
+    vertical-align: middle;
+}
+
+.multiple-table thead tr th.check input[type="checkbox"], .multiple-table tbody tr td.check input[type="checkbox"] {
+    margin: 0;
+}
+
+.multiple-table tbody tr {
+    background-color: #fff !important;
+}
+
+.multiple-table tbody tr:hover {
+    background-color: #f4f4f4 !important;
+}
+
+.multiple-table tbody tr td a {
+    text-decoration: underline;
+}
+
+.multiple-table tbody tr td.sorting, .multiple-table thead tr td.sorting {
+    cursor: move;
+}
+
+.multiple-table tbody tr th.sorting, .multiple-table thead tr th.sorting {
+    width: 40px;
+}
+
+.multiple-table tbody tr td, .multiple-table tbody tr th, .multiple-table thead tr td, .multiple-table thead tr th {
+    padding: 0 5px;
+    height: 32px;
+    line-height: 32px;
+}
+
+.multiple-table tbody tr td.td-id, .multiple-table tbody tr td.th-id, .multiple-table tbody tr th.td-id, .multiple-table tbody tr th.th-id, .multiple-table thead tr td.td-id, .multiple-table thead tr td.th-id, .multiple-table thead tr th.td-id, .multiple-table thead tr th.th-id {
+    width: 40px;
+    text-align: center;
+}
+
+.multiple-table tbody tr td.check, .multiple-table tbody tr th.check, .multiple-table thead tr td.check, .multiple-table thead tr th.check {
+    text-align: center;
+    width: 32px;
+}
+
+.multiple-table tbody tr td.check .checkbox-state, .multiple-table tbody tr th.check .checkbox-state, .multiple-table thead tr td.check .checkbox-state, .multiple-table thead tr th.check .checkbox-state {
+    margin: 0;
+}
+
+.multiple-table tbody tr td.check input, .multiple-table tbody tr th.check input, .multiple-table thead tr td.check input, .multiple-table thead tr th.check input {
+    display: none;
+}
+
+.multiple-table tbody tr td.check label, .multiple-table tbody tr th.check label, .multiple-table thead tr td.check label, .multiple-table thead tr th.check label {
+    font-family: glyphico;
+    font-weight: 400;
+    font-variant: normal;
+    color: #afafaf;
+}
+
+.multiple-table tbody tr td.check label:before, .multiple-table tbody tr th.check label:before, .multiple-table thead tr td.check label:before, .multiple-table thead tr th.check label:before {
+    content: "\e616";
+}
+
+.multiple-table tbody tr td.check input:checked + label, .multiple-table tbody tr th.check input:checked + label, .multiple-table thead tr td.check input:checked + label, .multiple-table thead tr th.check input:checked + label {
+    color: #2575b0;
+}
+
+.multiple-table tbody tr td.check input:checked + label:before, .multiple-table tbody tr th.check input:checked + label:before, .multiple-table thead tr td.check input:checked + label:before, .multiple-table thead tr th.check input:checked + label:before {
+    content: "\e6c5";
+}
+
+.multiple-table tbody tr td.actions, .multiple-table tbody tr th.actions, .multiple-table thead tr td.actions, .multiple-table thead tr th.actions {
+    width: 120px;
+}
+
+.multiple-table tbody tr td.actions a, .multiple-table tbody tr th.actions a, .multiple-table thead tr td.actions a, .multiple-table thead tr th.actions a {
+    text-decoration: none;
+}
+
+.multiple-table tbody tr td, .multiple-table thead tr td {
+    font-size: 14px;
+    color: #616161;
+}
+
+.multiple-table tbody tr td a, .multiple-table thead tr td a {
+    color: #616161;
+}
+
+.multiple-table tbody tr td a:hover, .multiple-table thead tr td a:hover {
+    color: #7b7b7b;
+}
+
+.multiple-table tbody tr td.actions a, .multiple-table thead tr td.actions a {
+    color: #afafaf;
+    margin-right: 8px;
+}
+
+.multiple-table tbody tr td.actions a:hover, .multiple-table thead tr td.actions a:hover {
+    color: #c9c9c9;
+}
+
+.multiple-table tbody tr td.actions a:last-child, .multiple-table thead tr td.actions a:last-child {
+    margin: 0;
+}
+
+.multiple-table tbody tr:nth-of-type(even) {
+    background-color: #fafafa;
+}
+
+.multiple-table tbody tr:hover {
+    background-color: #F9F6E3;
+}
+
+.multiple-table thead tr th a {
+    display: block;
+}
+
+.multiple-table thead tr th:hover a {
+    text-decoration: underline;
+}
+
+.mmodal-content form {
+    padding: 0;
+}
+
+.heading h1 {
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+}
+
+table thead tr th, table thead tr th a, table tbody tr th, table tbody tr th a {
+    color: #aaa;
+}
+
+table thead tr td, table thead tr th, table tbody tr td, table tbody tr th {
+    padding: 5px;
+}
+
+form.save-update .pager-holder .page-size select {
+    width: auto;
+}
+
+.multiple-admin-blocks {
+    margin-top: 30px;
+}
+
+.multiple-admin-title {
+    font-size: 17px;
+    margin-bottom: 15px;
+}

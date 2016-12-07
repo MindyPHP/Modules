@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <style>
+        .wrapper {
+
+        }
+
+        .company-name {
+            font-weight: bold;
+        }
+
+        .bank {
+            border: 1px solid #000;
+            font-size: 9px;
+        }
+
+        .bank td {
+            text-indent: 0;
+            padding: 0;
+            border: 1px solid #000;
+        }
+
+        .bank .multiline {
+            line-height: 55px;
+        }
+
+        .bank .first-column {
+            width: 60%;
+        }
+
+        .bank .second-column {
+            width: 10%;
+        }
+
+        .account-bank {
+            line-height: 16px;
+        }
+
+        .bankname {
+            line-height: 16px;
+        }
+
+        .account-info {
+            text-align: center;
+            font-weight: bold;
+            font-size: 15px;
+        }
+
+        .requisite {
+            font-size: 8px;
+            width: 100%;
+        }
+
+        .requisite .first-column{
+            font-weight: bold;
+            width: 15%;
+        }
+
+        .requisite .second-column {
+            width: 85%;
+        }
+
+        .works {
+            width: 103%;
+            font-size: 8px;
+        }
+
+        .works .head td {
+            text-align: center;
+        }
+
+        .works .row td {
+            line-height: 20px;
+        }
+
+        .works .number {
+            width: 6%;
+            border: 1px solid #000;
+            text-align: center;
+        }
+
+        .works .name {
+            width: 50%;
+            border: 1px solid #000;
+        }
+
+        .works .unit {
+            width: 10%;
+            border: 1px solid #000;
+            text-align: center;
+        }
+
+        .works .quantity {
+            width: 10%;
+            border: 1px solid #000;
+        }
+
+        .works .price {
+            width: 10%;
+            border: 1px solid #000;
+        }
+
+        .works .sum {
+            width: 14%;
+            border: 1px solid #000;
+        }
+
+        .works .row .name {
+            font-size: 7px;
+        }
+
+        .works .row .quantity, .works .row .price, .works .row .sum {
+            text-align: right;
+        }
+
+        .summary {
+            line-height: 9px;
+        }
+
+        .footer {
+            width: 100%;
+        }
+
+        .border-bottom {
+            text-decoration: underline;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .text-right {
+            text-align: right;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div class="company-name"><!--
+            -->ИП Фалалеев Максим Сергеевич
+        </div>
+
+        {% for i in range(0, 6) %}
+        &nbsp;<br/>
+        {% endfor %}
+
+        <table class="bank" cellspacing="0" cellpadding="3" border="1">
+            <tr>
+                <td class="first-column"><!--
+                 --><span class="inn">ИНН</span>
+                    <span class="inn-number">
+                        434585041778
+                    </span>
+
+                    <span class="kpp">
+                        КПП
+                    </span>
+                    <span class="kpp-number">
+
+                    </span>
+                </td>
+                <td rowspan="2" class="second-column multiline">Сч №</td>
+                <td rowspan="2" class="multiline">40802810100001000734</td>
+            </tr>
+            <tr>
+                <td class="first-column"><!--
+                 -->Получатель <br/>
+                    Индивидуальный предприниматель Фалалеев Максим Сергеевич
+                </td>
+            </tr>
+            <tr>
+                <td class="first-column" rowspan="2"><!--
+                 -->Банк получателя
+                    <div class="bankname">ЗАО "ПЕРВЫЙ ДОРТРАНСБАНК"</div>
+                </td>
+                <td class="second-column">БИК</td>
+                <td rowspan="2">043304757
+                    <div class="account-bank">30101810300000000757</div>
+                </td>
+            </tr>
+            <tr>
+                <td class="second-column">Сч №</td>
+            </tr>
+        </table>
+
+        &nbsp;<br/>&nbsp;<br/>
+
+        <div class="account-info"><!--
+          -->СЧЕТ № {{ num }} от &laquo;{{ date.format('t') }}&raquo; {{ formatter.format('MMMM', date.getTimestamp()) }} {{ date.format('Y') }} г.
+        </div>
+
+        &nbsp;<br/>
+
+        <table class="requisite">
+            <tr>
+                <td class="first-column"><!--
+                 -->Плательщик:
+                </td>
+                <td class="second-column"><!--
+                 -->{{ project.details }}
+                    &nbsp;<br/>
+                </td>
+            </tr>
+            <tr>
+                <td class="first-column"><!--
+                 -->Договор:
+                </td>
+                {% set timestamp = project.date_contract|date('U') %}
+                <td class="second-column"><!--
+                 -->Договор № {{ project.number_contract }} от {{ formatter.format('d MMMM yyyy', timestamp)}} г.
+                </td>
+            </tr>
+        </table>
+
+        &nbsp;<br/>
+
+        <table class="works" cellpadding="3">
+            <tr class="head">
+                <td class="number">№</td>
+                <td class="name">Наименование товара, работ, услуг</td>
+                <td class="unit">Ед. изм.</td>
+                <td class="quantity">Кол-во</td>
+                <td class="price">Цена</td>
+                <td class="sum">Сумма</td>
+            </tr>
+            <tr class="row">
+                <td class="number">1</td>
+                <td class="name">Техническое и контентное обслуживание веб-сайта ({{ formatter.format('LLLL', date.getTimestamp()) }})</td>
+                <td class="unit">1</td>
+                <td class="quantity">1</td>
+                <td class="price">{{ subscription.price|number_format(2, ',', ' ') }}р.</td>
+                <td class="sum">{{ subscription.price|number_format(2, ',', ' ') }}р.</td>
+            </tr>
+            <tr>
+                <td colspan="5" class="bold text-right"><!--
+                 -->Итого :
+                </td>
+                <td class="sum text-right"><!--
+                 -->{{ subscription.price|number_format(2, ',', ' ') }}р.
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" class="bold text-right"><!--
+                 -->Без налога (НДС) :
+                </td>
+                <td class="sum bold text-right"><!--
+                 -->---
+                </td>
+            </tr>
+            <tr>
+                <td colspan="5" class="bold text-right"><!--
+                 -->Всего к оплате :
+                </td>
+                <td class="sum bold text-right"><!--
+                 -->{{ subscription.price|number_format(2, ',', ' ') }}р.
+                </td>
+            </tr>
+        </table>
+
+        &nbsp;<br/>
+
+        <div class="summary"><!--
+         -->Всего наименований 1, на сумму {{ subscription.price|number_format(0, ',', ' ') }} руб. {{ "%02d"|format(subscription.price * 100 % 100) }} коп.
+        </div>
+        <div class="summary bold"><!--
+         -->{{ subscription.price|humanizePrice|ucfirst }}
+        </div>
+
+        &nbsp;<br/> &nbsp;<br/> &nbsp;<br/>
+
+        <table class="footer" cellpadding="0">
+            <tr>
+                <td><!--
+                 -->Индивидуальный предприниматель
+                </td>
+                <td class="text-right">
+                    <span class="border-bottom" style="width: 100px;">
+                        {% for i in range(0,13) %}
+                            &nbsp;
+                        {% endfor %}
+                    </span>
+                    /Фалалеев М.С./
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,53 @@
+{% extends "portfolio/base.html" %}
+
+{% block breadcrumbs %}
+    {% url 'portfolio:list' as url %}
+    {% set this.breadcrumbs = [
+        ['name' => t('Portfolio', 'Portfolio'), 'url' => url],
+        ['name' => model.name]
+    ] %}
+    {% parent %}
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="columns small-12">
+            <div class="portfolio-detail-block">
+                <h1>{{ model }}</h1>
+                <div class="portfolio-description">
+                    {{ model.description|safe }}
+                </div>
+                <footer class="portfolio-detail-footer text-center">
+                    {% if model.next %}
+                        <a class="next text-right right" href="{{ model.next.getAbsoluteUrl() }}"
+                           rel="tooltip" title="Следующая"></a>
+                    {% endif %}
+                    <a class="list" href="{{ model.category.getAbsoluteUrl() }}"
+                       rel="tooltip" title="К списку"></a>
+                    {% if model.prev %}
+                        <a class="prev text-left left" href="{{ model.prev.getAbsoluteUrl() }}"
+                           rel="tooltip" title="Предыдущая"></a>
+                    {% endif %}
+                </footer>
+            </div>
+
+            {% if model.image %}
+                <img class="portfolio-detail-image" id="portfolio-main-image" src="{{ model.image.image.url }}"/>
+            {% endif %}
+
+            <div class="portfolio-detail-images-container">
+                <div class="nano">
+                    <ul class="portfolio-detail-images nano-content">
+                        {% for image in model.images %}
+                            <li>
+                                <a href="{{ image.image.url }}">
+                                    <img src="{{ image.image.url_75x75 }}" alt="{{ model }}"/>
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block heading %}
+    <h1>{{ model.name }}</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="goods-product">
+        <div class="row">
+            <div class="column {% if model.image.url %}large-9{% else %}large-12{% endif %}">
+                <article>
+                    {{ model.description|raw }}
+                </article>
+            </div>
+            {% if model.image.url %}
+                <div class="column large-3">
+                    {% if model.image.url %}
+                        <a href="#" class="fancy-start">
+                            <img src="{{ model.image.url_preview }}" alt="{{ model.name }}"/>
+                        </a>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}
+
+{% block js %}
+    <script>
+        $(function(){
+            $('.fancy-start').on('click', function(e){
+                e.preventDefault();
+                $.fancybox([
+                    '{{ model.image.url }}',
+                    {% for image in model.images %}
+                        '{{ image.file.url }}',
+                    {% endfor %}
+                ],{
+                    helpers : {
+                        buttons : {}
+                    }
+                });
+                return false;
+            });
+        })
+    </script>
+{% endblock %}

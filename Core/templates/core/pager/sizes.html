@@ -1,0 +1,10 @@
+<div class="select-holder">
+    <select name="{{ this.pageSizeKey }}" id="pageSize" onchange="window.location=this.value">
+        {% for pageSize in this.pageSizes %}
+            <option value="{{ this.urlPageSize(pageSize) }}"
+                    {% if this.pageSize == pageSize %}selected="selected"{% endif %}>
+                {{ pageSize }}
+            </option>
+        {% endfor %}
+    </select>
+</div>

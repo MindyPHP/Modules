@@ -1,0 +1,31 @@
+{% block actions %}
+    {% if 'update' in admin.actionsList %}
+        <a class="ui popup-item" data-content="Редактирование" data-variation="tiny inverted"
+           href="{{ admin.getUpdateUrl(record.pk) }}">
+            <i class="icon pencil"></i>
+        </a>
+    {% endif %}
+
+    {% if 'view' in admin.actionsList and method_exists(record, "getAbsoluteUrl") %}
+        <a class="ui popup-item" data-content="Открыть на сайте" data-variation="tiny inverted"
+           href="{{ record.getAbsoluteUrl() }}" target="_blank">
+            <i class="icon external"></i>
+        </a>
+    {% endif %}
+
+    {% if 'info' in admin.actionsList %}
+        <a class="ui popup-item"
+           data-content="Информация" data-variation="tiny inverted"
+           href="{{ admin.getInfoUrl(record.pk) }}">
+            <i class="icon browser"></i>
+        </a>
+    {% endif %}
+
+    {% if 'delete' in admin.actionsList %}
+        <a data-content="Удалить" data-variation="tiny inverted"
+           class="ui popup-item action-delete" data-confirm="{{ t('Do you really want to delete this object?', 'core') }}"
+           href="{{ admin.getDeleteUrl(record.pk) }}">
+            <i class="icon trash"></i>
+        </a>
+    {% endif %}
+{% endblock %}

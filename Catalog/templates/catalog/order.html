@@ -1,0 +1,12 @@
+{% extends "catalog/base.html" %}
+
+{% block content %}
+    <h1>Заказ: {{ model }}</h1>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form|safe }}
+        <br/>
+        <input class="link-button" type="submit" value="{{ t('Make order', 'catalog') }}"/>
+    </form>
+{% endblock %}

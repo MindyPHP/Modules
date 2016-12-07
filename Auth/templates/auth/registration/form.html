@@ -1,0 +1,27 @@
+{% extends "auth/base.html" %}
+
+{% block breadcrumbs %}
+    {% set this.breadcrumbs = [['name' => t('Registration', 'auth')]] %}
+    {% parent %}
+{% endblock %}
+
+{% block heading %}
+    <h1>{{ t('Registration', 'auth') }}</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="columns small-12">
+            <form action="" method="post">
+                {% csrf_token %}
+                {{ form.render()|safe }}
+                {% if profile_form %}
+                    {{ profile_form.render()|safe }}
+                {% endif %}
+                <div class="form-row">
+                    <input type="submit" class="button" value="{{ t('Registration', 'auth') }}"/>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}

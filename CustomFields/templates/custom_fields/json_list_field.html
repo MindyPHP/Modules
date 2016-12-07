@@ -1,0 +1,85 @@
+<style>
+    #{{ id }}-list input {
+        width: 20%;
+        display: inline-block;
+    }
+
+    #{{ id }}-list li {
+        cursor: pointer;
+    }
+</style>
+
+<ul id="{{ id }}-list" style="margin: 0;" class="no-bullet">
+    {% for key, value in data %}
+        <li class="clearfix">
+            <i class="icon-trash"></i>
+            <i class="icon-move"></i>
+            <input type="text" class="key" placeholder="{{ t('Key', 'CustomFields') }}" value="{{ key }}"/> :
+            <input type="text" class="value" placeholder="{{ t('Value', 'CustomFields') }}" value="{{ value }}"/>
+        </li>
+    {% endfor %}
+</ul>
+
+<a class="button" href="#" id="{{ id }}-append">
+    + {{ t('Append', 'CustomFields') }}
+</a>
+
+<textarea name="{{ name }}" id="{{ id }}" cols="30" rows="10" style="display: none">{{ encoded|raw }}</textarea>
+
+<script>
+    $(function(){
+        var list = '#{{ id }}-list';
+        var append = "#{{ id }}-append";
+        var remove = "#{{ id }} .icon-trash";
+        var input = "#{{ id }} input";
+        var area = "#{{ id }}";
+
+        function save() {
+            var data = [];
+            var options = "";
+            $(list).find('li').each(function(){
+                var $item = $(this);
+                var key = $item.find('.key').val();
+                var value = $item.find('.value').val();
+                if (key && value) {
+                    if (options) {
+                        options += ',';
+                    }
+                    options += JSON.stringify(key) + ":" + JSON.stringify(value);
+                }
+            });
+            options = "{" + options + "}";
+            $(area).val(options);
+        }
+
+        $(list).dragsort({
+            dragSelector: "li",
+            placeHolderTemplate: "<li class='empty'></li>",
+            dragEnd: function() {
+                save();
+            }
+        });
+
+        $(append).on('click', function(e){
+            e.preventDefault();
+            $(list).append($('<li class="clearfix"> ' +
+                ' <i class="icon-trash"></i> ' +
+                ' <i class="icon-move"></i >' +
+                ' <input type="text" class="key" placeholder="{{ t("Key", "CustomFields") }}" value="{{ key }}"/> :' +
+                ' <input type="text" class="value" placeholder="{{ t("Value", "CustomFields") }}" value="{{ value }}"/> ' +
+            '</li>'));
+            return false;
+        });
+
+        $(list).on('click', '.icon-trash', function(e){
+            e.preventDefault();
+            $(this).closest('li').remove();
+            save();
+            return false;
+        });
+
+        $(list).on('keyup', 'input', function(e) {
+            save();
+        });
+    })
+</script>

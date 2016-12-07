@@ -1,0 +1,30 @@
+{% if errors and form.errors %}
+    <ul class="form-errors">
+        {% for name, errors in form.errors %}
+            {% for i, error in errors %}
+                {% if form.hasField(name) %}
+                    <li>{{ form.getField(name).label ? form.getField(name).label : name }}: {{ error }}</li>
+                {% else %}
+                    <li>{{ name }}: {{ error }}</li>
+                {% endif %}
+            {% endfor %}
+        {% endfor %}
+    </ul>
+{% endif %}
+
+{% if form.getFieldsets()|length %}
+    {% for fieldset, fields in form.getFieldsets() %}
+        {% if fields|length > 0 %}
+            <fieldset>
+                <legend>{{ fieldset }}</legend>
+                {% for field in fields %}
+                    <div class="form-block">{{ form.getField(field).render()|raw }}</div>
+                {% endfor %}
+            </fieldset>
+        {% endif %}
+    {% endfor %}
+{% else %}
+    {% for field in form.getRenderFields() %}
+        <div class="form-block">{{ field.render()|raw }}</div>
+    {% endfor %}
+{% endif %}

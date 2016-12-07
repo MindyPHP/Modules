@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    Наименование: {{ item.name }}<br/>
+    Цена: {{ item.price }} руб.
+
+    <h2>Заказать данный товар</h2>
+    <form action="" method="post">
+        {{ form.asBlock()|raw }}
+
+        <button type="submit">
+            Отправить
+        </button>
+    </form>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends 'admin/base.html' %}
+
+{% block heading %}
+    <h1>{{ admin.getVerboseNameCreate() }}</h1>
+{% endblock %}
+
+{% block content_class %}create{% endblock %}
+
+{% block content %}
+    <div class="form--main">
+        <form action="" method="post" enctype="multipart/form-data" class="clearfix save-update">
+            {% include "admin/admin/buttons_create.html" %}
+            {% csrf_token %}
+            {{ form.render()|raw }}
+            {% include "admin/admin/buttons_create.html" %}
+        </form>
+    </div>
+    <script type="text/javascript">
+        $('.form--main').find('input[type=text], textarea, select').filter(':visible:first').focus();
+    </script>
+{% endblock %}

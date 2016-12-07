@@ -1,0 +1,30 @@
+{% extends "catalog/base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="columns large-9">
+            <h1>{{ category }}</h1>
+            <article class="category-detail">
+                {{ category.description|safe }}
+            </article>
+        </div>
+    </div>
+
+    {% if models|length %}
+        <div class="row">
+            <div class="columns large-12">
+                <h3>Товары</h3>
+                <ul class="catalog-production-list medium-block-grid-4">
+                    {% for model in models %}
+                        <li>
+                            <a href="{{ model.getAbsoluteUrl() }}">
+                                <img class="th" src="{% if model.image %}{{ model.image.image.url_165x186 }}{% else %}http://placehold.it/228x147{% endif %}" alt="{{ model }}"/>
+                            </a>
+                            <a href="{{ model.getAbsoluteUrl() }}">{{ model }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}

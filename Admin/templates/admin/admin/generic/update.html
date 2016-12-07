@@ -1,0 +1,21 @@
+{% extends 'admin/base.html' %}
+
+{% block heading %}
+    <h1>{{ admin.getVerboseNameUpdate(model) }}</h1>
+{% endblock %}
+
+{% block content_class %}update{% endblock %}
+
+{% block content %}
+    <div class="form--main">
+        <form action="" method="post" enctype="multipart/form-data" class="clearfix save-update">
+            {% include "admin/admin/buttons_update.html" %}
+            {% csrf_token %}
+            {{ form.render()|raw }}
+            {% include "admin/admin/buttons_update.html" %}
+        </form>
+    </div>
+    <script type="text/javascript">
+        $('.form--main').find('input[type=text], textarea, select').filter(':visible:first').focus();
+    </script>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% set admins = admin.getMultipleInit(model) %}
+
+{% if admins %}
+    <script>{% include 'multiple/static/multiple.js' %}</script>
+    <style>{% include 'multiple/static/multiple.css' %}</style>
+
+    <div class="multiple-admin-blocks">
+        {% for name, multipleAdmin in admin.getMultipleInit(model) %}
+            <div class="multiple-admin-block">
+                <h6 class="multiple-admin-title">{{ multipleAdmin.getVerboseName() }}</h6>
+                {% if model.pk %}
+                    <div class="multiple-admin-input">
+                        {{ multipleAdmin.renderInput()|raw }}
+                    </div>
+                {% else %}
+                    <div class="multiple-admin-empty">
+                        {{ t('For add data, please save model', 'multiple') }}
+                    </div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

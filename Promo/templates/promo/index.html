@@ -1,0 +1,30 @@
+{% extends "promo/base.html" %}
+
+{% block content %}
+    {% if showForm %}
+        <div class="promo-container row">
+            <div class="columns large-1">
+                &nbsp;
+            </div>
+            <div class="columns large-10">
+                <h3>{{ t('Sign up for updates', 'promo') }}</h3>
+                <form class="promo-subscribe-form" action="" method="post">
+                    {% csrf_token %}
+                    <input class="right button" type="submit" value="{{ t('Subscribe', 'promo') }}"/>
+                    {{ form.email.renderInput()|safe }}
+                    {% if form.email.errors|length > 0 %}
+                        <ul class="error-list">
+                        {% for error in form.email.errors %}
+                            <li>{{ error }}</li>
+                        {% endfor %}
+                        </ul>
+                    {% endif %}
+                </form>
+            </div>
+            <div class="columns large-1">
+                &nbsp;
+            </div>
+        </div>
+    {% endif %}
+    <div class="promo-image row"></div>
+{% endblock %}

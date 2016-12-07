@@ -1,0 +1,11 @@
+{% for model in models %}
+    {% if model.level == 1 %}
+        <optgroup label="{{ model.name }}">
+            {% if model.items|length > 0 %}
+                {% include "forum/_navigation.html" with ['models' => model.items, 'nested' => nested+1] %}
+            {% endif %}
+        </optgroup>
+    {% else %}
+        <option onclick="window.location=this.value" value="{% url 'forum:forum' model.id model.slug %}">{{ "..."|repeat(nested) }}{{ model.name }}</option>
+    {% endif %}
+{% endfor %}

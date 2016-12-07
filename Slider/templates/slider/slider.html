@@ -1,0 +1,11 @@
+{% if models %}
+    <div class="slider">
+        {% for model in models %}
+            <div>
+                {% if model.url %}<a title="{{ model }}" href="{{ model.url }}">{% endif %}
+                <img src="{{ model.image.url_978x260 }}" alt="{{ model }}"/>
+                {% if model.url %}</a>{% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

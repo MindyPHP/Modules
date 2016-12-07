@@ -1,0 +1,12 @@
+{% extends "user/base.html" %}
+
+{% block content %}
+    <h1>{{ t('Registration', 'user') }}</h1>
+
+    <form action="{% url 'user:registration' %}" method="post">
+        {% csrf_token %}
+        {{ form|safe }}
+        <br/>
+        <input type="submit" class="button" value="{{ t('Registration', 'user') }}"/>
+    </form>
+{% endblock %}

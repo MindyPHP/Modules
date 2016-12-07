@@ -1,0 +1,18 @@
+{% extends "auth/base.html" %}
+
+{% block breadcrumbs %}
+    {% set this.breadcrumbs = user.isGuest ? [['name' => t('Change password', 'auth')]] : [['name' => user, 'url' => user.getAbsoluteUrl()], ['name' => t('Change password', 'auth')]] %}
+    {% parent %}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ t('Change password', 'auth') }}</h1>
+
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form.render()|safe }}
+        <div class="form-row">
+            <input type="submit" value="{{ t('Change password', 'auth') }}" />
+        </div>
+    </form>
+{% endblock %}

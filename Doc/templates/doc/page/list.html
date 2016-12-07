@@ -1,0 +1,13 @@
+{% extends "doc/page/base.html" %}
+
+{% block content %}
+    <h1>{{ model }}</h1>
+
+    <ul class="no-bullet">
+        {% for model in models %}
+            <li style="padding-left: {{ model.url|substr_count('/') * 2 }}0px;">
+                <a href="{% url 'doc:view' model.url %}">{{ model.name }}</a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

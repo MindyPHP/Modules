@@ -1,0 +1,23 @@
+<div id="map" style="width: 100%;height:450px;"></div>
+<script type='text/javascript'>
+    function yandexMapInit() {
+        var yandexMap = new ymaps.Map('map', {
+            center: [{{ model.lat }}, {{ model.lng }}],
+            zoom: 16,
+            controls: ['zoomControl']
+        });
+
+        yandexMap.geoObjects.add(new ymaps.Placemark([{{ model.lat }}, {{ model.lng }}], {
+            balloonContentHeader: "{{ model }}",
+            balloonContentBody: "{{ model.address }}",
+            balloonContentFooter: "",
+            hintContent: "{{ model }}"
+        }, {
+            iconLayout: 'default#image',
+            iconImageHref: '/static/dist/images/main/placemark.png',
+            iconImageSize: [28, 36],
+            iconImageOffset: [-14, -18]
+        }));
+    }
+    ymaps.ready(yandexMapInit);
+</script>

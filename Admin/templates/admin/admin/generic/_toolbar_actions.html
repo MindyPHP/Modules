@@ -1,0 +1,14 @@
+<div class="actions--container">
+    <div class="select-holder">
+        <select name="action" id="actions" class="actions">
+            <option value="" disabled="disabled"
+                    selected="selected">{{ t('Choose action', 'admin') }}</option>
+            {% for key, value in actions %}
+                <option value="{{ key }}">{{ value }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <button type="submit" class="ui button tiny primary icon">
+        <i class="icon checkmark"></i>
+    </button>
+</div>

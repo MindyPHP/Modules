@@ -1,0 +1,15 @@
+<a href="#" class="request-button" data-subscribe="{{ subscribe.id }}"
+   data-month="{{ month.month }}" data-year="{{ month.year }}"
+   {% if request %}data-request="{{ request.id }}" {% if request.status == 1 %}data-status="2"{% endif %}{% endif %}>
+    <span class="on-hover">
+        {% if not request %}
+            +
+        {% else %}
+            {% if request.status == 1 %}
+                <i class="icon-check"></i>
+            {% else %}
+                &times;
+            {% endif %}
+        {% endif %}
+    </span>
+</a>

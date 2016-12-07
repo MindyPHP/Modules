@@ -1,0 +1,11 @@
+{% extends "forum/base.html" %}
+
+{% block content %}
+    <h1>{{ t('Add topic', 'forum') }}</h1>
+
+    <form action="{% url 'forum:topic_add' forum.pk forum.slug %}" method="post">
+        {% csrf_token %}
+        {{ form|safe }}
+        <input type="submit" value="{{ t('Save', 'forum') }}" class="link-button" />
+    </form>
+{% endblock %}

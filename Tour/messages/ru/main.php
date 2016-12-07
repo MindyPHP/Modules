@@ -1,0 +1,25 @@
+<?php
+
+return array (
+  'Events' => 'События',
+  'Create Event' => 'Добавить событие',
+  'Update Event' => 'Редактирование события',
+  'Orders' => 'Заказы',
+  'Create Order' => 'Добавить заказ',
+  'Update Order' => 'Редактирование заказа',
+  'Places' => 'Места проведения',
+  'Create Place' => 'Добавить место',
+  'Update Place' => 'Редактирование места',
+  'Success order!' => 'Заявка принята! С вами свяжется наш менеджер',
+  'This time is busy!' => 'Это время уже занято!',
+  'Place' => 'Место проведения',
+  'Datetime' => 'Дата',
+  'Event' => 'Событие',
+  'Organization' => 'Организация',
+  'Count of users' => 'Кол-во участников',
+  'Your phone' => 'Ваш телефон',
+  'Your e-mail' => 'Ваш E-mail',
+  'Comment' => 'Комментарий',
+  'Created at' => 'Добавлено',
+  'Name' => 'Наименование',
+);

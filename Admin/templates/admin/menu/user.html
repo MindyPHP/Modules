@@ -1,0 +1,10 @@
+{% for item in apps %}
+    <li>
+        <div class="menu-item-container">
+            <a class="module-name" href="{% url 'admin:list' item.module item.adminClass %}">
+                <span class="{{ item.module|lower }} module-image"></span>
+                {{ item.name }}
+            </a>
+        </div>
+    </li>
+{% endfor %}

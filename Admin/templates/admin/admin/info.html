@@ -1,0 +1,30 @@
+{% extends request.isAjax ? "ajax.html" : 'admin/base.html' %}
+
+{% block breadcrumbs %}
+    {% set this.breadcrumbs = breadcrumbs %}
+    {% parent %}
+{% endblock %}
+
+{% block heading %}
+    <h1>{{ t('Information about', 'admin') }} {{ model }}</h1>
+{% endblock %}
+
+{% block content_class %}info{% endblock %}
+
+{% block content %}
+    <p>
+        <a href="{{ admin.getAdminUrl('print') }}?pk={{ model.pk }}" target="_blank"
+           class="window-open ui button tiny basic print-button">
+            <i class="icon print"></i> {{ t('Print', 'admin') }}
+        </a>
+    </p>
+
+    {% include admin.getTemplate("_info_table.html") %}
+
+    <p>
+        <a href="{{ admin.getAdminUrl('print') }}?pk={{ model.pk }}" target="_blank"
+           class="window-open ui button tiny basic print-button">
+            <i class="icon print"></i> {{ t('Print', 'admin') }}
+        </a>
+    </p>
+{% endblock %}

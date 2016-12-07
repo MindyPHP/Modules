@@ -1,0 +1,13 @@
+{% extends request.isAjax ? "ajax.html" : "partners/base.html" %}
+
+{% block content %}
+    <h1>Партнеры</h1>
+
+    <ul>
+    {% for partner in partners %}
+        <li>{{ partner.name }}</li>
+    {% endfor %}
+    </ul>
+
+    {{ pager.render() }}
+{% endblock %}

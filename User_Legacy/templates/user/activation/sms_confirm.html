@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block heading %}
+    <h1>Подтверждение учетной записи по смс</h1>
+{% endblock %}
+
+{% block content %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {{ form|safe }}
+        <div class="form-row">
+            <input type="submit" value="{{ t('Send', 'user') }}" />
+        </div>
+    </form>
+{% endblock %}

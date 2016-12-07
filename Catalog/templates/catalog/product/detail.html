@@ -1,0 +1,50 @@
+{% extends "catalog/base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="columns large-5">
+            <a href="{{ model.image.image.url }}">
+                <img src="{{ model.image.image.url_283x318 }}" alt="{{ model }}" class="th"/>
+            </a>
+            <p>&nbsp;</p>
+            <ul class="medium-block-grid-3">
+                {% for image in model.images.exclude(['pk' => model.image.pk]) %}
+                    <li>
+                        <a href="{{ image.image.url }}">
+                            <img src="{{ image.image.url_81x90 }}" class="th" alt="{{ model }}"/>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        <div class="columns large-7">
+            <h1>{{ model }}</h1>
+            <p>{{ number_format(model.price, 2, '.') }} руб.</p>
+            <p><a class="button" href="{% url 'catalog:product_order' model.pk %}">Заказать</a></p>
+            <hr/>
+            {{ model.description|safe }}
+        </div>
+        {% if model.categories.count() > 0 %}
+        <div class="columns large-12">
+            <hr/>
+            <h1>Так же находится в категориях:</h1>
+            <ul class="no-bullet">
+                {% for category in model.categories.all %}
+                    <li><a href="{{ category.getAbsoluteUrl }}">{{ category }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+        {% if last_view %}
+        <div class="columns large-12">
+            <hr/>
+            <h1>Недавно вы смотрели:</h1>
+            <ul class="no-bullet">
+                {% for last in last_view %}
+                    <li><a href="{{ last.getAbsoluteUrl }}">{{ last }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+        {% endif %}
+    </div>
+{% endblock %}

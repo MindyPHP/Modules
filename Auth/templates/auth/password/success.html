@@ -1,0 +1,14 @@
+{% extends "auth/base.html" %}
+
+{% block breadcrumbs %}
+    {% url 'auth:change_password' as url %}
+    {% set this.breadcrumbs = [
+            ['name' => t('Change password', 'auth'), 'url' => url],
+            ['name' => t('Password successfully changed', 'auth')]
+            ] %}
+    {% parent %}
+{% endblock %}
+
+{% block content %}
+    <h1>{{ t('Password successfully changed', 'auth') }}</h1>
+{% endblock %}

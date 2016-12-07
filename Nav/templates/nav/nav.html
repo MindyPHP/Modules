@@ -1,0 +1,68 @@
+<section class="top-menu">
+    <section class="row menu-row">
+        <menu class="menu no-bullet main-menu justify">
+            {% for item in items %}
+                <li data-id="{{ item.id }}" class="item-menu">
+                    <a href="{{ item.url }}" data-id="{{ item.id }}">{{ item.name }}</a>
+                </li>
+            {% endfor %}
+        </menu>
+    </section>
+</section>
+
+<section class="bottom-menu">
+    <section class="row bottom-row">
+        <section class="submenus">
+            {% for item in items %}
+                {% if item.items %}
+                    <section class="submenu" id="submenu-{{ item.id }}" data-menu="{{ item.id }}">
+                        {% for subitem in item.items|slice(0, 3) %}
+                            <section class="sub-item">
+                                <section class="sub-item-header">
+                                    <a href="{{ subitem.url }}">
+                                        {% if subitem.image %}
+                                            <img src="/media/{{ subitem.image }}" alt=""/>
+                                        {% endif %}
+
+                                        <span class="sub-item-title">
+                                            {{ subitem.name }}
+                                        </span>
+                                    </a>
+                                </section>
+                                <section class="sub-item-menu">
+                                    {% if subitem.items %}
+                                        {% for subsubitem in subitem.items %}
+                                            <a class="item-submenu" href="{{ subsubitem.url }}">
+                                                <span class="item-submenu-text">
+                                                    {{ multispan(subsubitem.name)|safe }}
+                                                </span>
+                                                {% if subsubitem.label %}
+                                                    <span class="item-submenu-label" style="{% if subsubitem.label_color %}color:{{ subsubitem.label_color }};{% endif %}{% if subsubitem.label_bg %}background-color:{{ subsubitem.label_bg }};{% endif %}">
+                                                        {{ subsubitem.label }}
+                                                    </span>
+                                                {% endif %}
+                                            </a>
+                                        {% endfor %}
+                                    {% endif %}
+                                </section>
+                            </section>
+                        {% endfor %}
+
+                        {% if item.image %}
+                            <section class="menu-image">
+                                {% if item.video %}
+                                    <a href="{{ item.video }}" class="fancybox-media">
+                                        <img src="/media/{{ item.image }}" alt=""/>
+                                    </a>
+                                {% else %}
+                                    <img src="/media/{{ item.image }}" alt=""/>
+                                {% endif %}
+                            </section>
+                        {% endif %}
+                        <p class="clear"></p>
+                    </section>
+                {% endif %}
+            {% endfor %}
+        </section>
+    </section>
+</section>

@@ -1,0 +1,25 @@
+<?php
+
+return array (
+  'Meta information' => 'Метаинформация',
+  'Is custom' => 'Указать вручную',
+  'Title' => 'Заголовок',
+  'Description' => 'Описание',
+  'Keywords' => 'Ключевые слова',
+  'Meta' => 'Мета информация',
+  'If "Set manually" field was not set, data will be generated automatically' => 'Если поле "Указать вручную" не указано, то данные будут сгенерированы автоматически',
+  'Url' => 'Ссылка',
+  'Meta {url} was created' => 'Метаинформация {url} была добавлена',
+  'Meta {url} was updated' => 'Метаинформация {url} была обновлена',
+  'Meta {url} was deleted' => 'Метаинформация {url} была удалена',
+  'Create meta' => 'Добавить мета информацию',
+  'Update meta: {name}' => 'Редактирование мета информации: {name}',
+  'meta information' => 'мета информация',
+  'Meta custom' => 'Указать вручную',
+  'Content type' => 'Content type',
+  'Object identificator' => 'ID объекта',
+  'Create time' => 'Время создания',
+  'Update time' => 'Время обновления',
+  'Add meta information' => 'Добавить метаинформацию',
+  'Update meta information' => 'Редактировать метаинформацию',
+);

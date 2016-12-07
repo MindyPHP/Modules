@@ -1,0 +1,13 @@
+{% extends "wiki/base.html" %}
+
+{% block content %}
+    <h1>{{ t('Index', 'wiki') }}</h1>
+
+    <ul class="no-bullet">
+    {% for model in models %}
+        <li style="padding-left: {{ model.url|substr_count('/') - 1 * 2 }}0px;">
+            <a href="{% url 'wiki:view' model.url %}">{{ model.name }}</a>
+        </li>
+    {% endfor %}
+    </ul>
+{% endblock %}

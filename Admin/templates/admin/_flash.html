@@ -1,0 +1,11 @@
+{% set flash = request.flash.all() %}
+{% if flash|length > 0 %}
+    <ul class="flash-list">
+        {% for key, value in flash %}
+            <li class="{{ key }}">
+                <span class="icon remove float-right">&times;</span>
+                {{ value }}
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}

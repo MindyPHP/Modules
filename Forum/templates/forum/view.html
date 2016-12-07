@@ -1,0 +1,51 @@
+{% extends "forum/base.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="columns large-12">
+            <h1>{{ model }}</h1>
+            {{ model.description }}
+        </div>
+        <div class="columns large-6">
+            <p><a class="link-button" href="{% url 'forum:topic_add' model.pk model.slug %}">{{ t('Add topic', 'forum') }}</a></p>
+        </div>
+        <div class="columns large-6">
+            {{ forum_navigation()|safe }}
+        </div>
+        <div class="columns large-12">
+            <hr/>
+            <ul class="topic-list no-bullet">
+                {% for topic in topics %}
+                <li>
+                    <span class="topic-list-panel right">{{ t("Replies", 'forum') }}: {{ topic.replies_count }} / {{ t('Views', 'forum') }}: {{ topic.views_count }}</span>
+                    <h4><a href="{{ topic.getAbsoluteUrl() }}">{{ topic|truncate(80) }}</a></h4>
+                    <span class="topic-message">{{ topic.message|truncate(100) }}</span>
+                    {% if not user.isGuest %}
+                        <div class="topic-buttons">
+                            {% if user.pk == model.user.pk or user.can('forum:topic_update') %}
+                                <a href="{% url 'forum:topic_update' model.pk %}">{{ t('Edit', 'forum') }}</a>
+                            {% endif %}
+                            {% if user.pk == model.user.pk or user.can('forum:topic_delete') %}
+                                <a href="{% url 'forum:topic_delete' model.pk %}" data-confirm="{{ t('You really want to delete this topic?', 'forum') }}">{{ t('Delete', 'forum') }}</a>
+                            {% endif %}
+                        </div>
+                    {% endif %}
+                    {% if not loop.last %}<hr/>{% endif %}
+                </li>
+                {% else %}
+                    <li>{{ t('Forum is empty', 'forum') }}</li>
+                {% endfor %}
+            </ul>
+            <hr/>
+        </div>
+        <div class="columns large-6">
+            <p><a class="link-button" href="{% url 'forum:topic_add' model.pk model.slug %}">{{ t('Add topic', 'forum') }}</a></p>
+        </div>
+        <div class="columns large-6">
+            {{ forum_navigation()|safe }}
+        </div>
+        <div class="columns large-12">
+            {{ pager.render()|safe }}
+        </div>
+    </div>
+{% endblock %}

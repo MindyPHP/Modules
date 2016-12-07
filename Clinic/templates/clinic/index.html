@@ -1,0 +1,80 @@
+{% extends "clinic/base.html" %}
+
+{% block body_class %}index{% endblock %}
+
+{% block pre %}
+    <div class="header-background backstretch" data-src="/static/dist/images/main/header-bg.png"></div>
+{% endblock %}
+
+{% block content %}
+    {{ slider() }}
+
+    <div class="row">
+        <div class="columns large-12">
+            <ul class="main-columns large-block-grid-3">
+                <li>
+                    <div class="main-column about">
+                        <div class="man"></div>
+                        <h4>Добро<br/>пожаловать!</h4>
+                        <hr/>
+                        <div class="main-inner">
+                            {{ get_block('index-about')|safe }}
+
+                            <p class="description">
+                                Заслуженный работник высшей школы Российской Федерации,
+                                д.м.н., профессор И.В. Шешунов
+                            </p>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="main-column">
+                        <h4>Новости</h4>
+                        <hr/>
+                        <div class="main-inner">
+                            {% set pages = get_pages(1, 3) %}
+                            {% if pages|length > 0 %}
+                            <ul class="no-bullet news-list">
+                                {% for page in pages %}
+                                    <li{% if loop.last %} class="last"{% endif %}>
+                                        <p><a href="{{ page.getAbsoluteUrl() }}">{{ page }}</a></p>
+                                        <p>{{ page.published_at|date('d.m.Y') }}</p>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                            <div class="main-bottom"><a href="/pages/news">Все новости</a></div>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div class="main-column">
+                        <h4>Свяжитесь с нами</h4>
+                        <hr/>
+                        <div class="main-inner">
+                            <ul class="contacts-list">
+                                <li class="phone">
+                                    <p class="title">+7 (8332) 62-58-43</p>
+                                    <p class="description">Регистратура</p>
+                                </li>
+                                <li class="phone">
+                                    <p class="title">+7 (8332) 62-77-28</p>
+                                    <p class="description">Приемная директора</p>
+                                </li>
+                                <li class="map">
+                                    <p class="title">ул. Щорса, 64</p>
+                                    <a href="/pages/contacts">Как добраться?</a>
+                                </li>
+                                <li class="email">
+                                    <p>e-mail:</p>
+                                    <a href="mailto:clinika@kirovgma.ru">clinika@kirovgma.ru</a>
+                                </li>
+                            </ul>
+                            <div class="main-bottom"><a href="/pages/contacts">Все контакты</a></div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "clinic/base.html" %}
+
+{% block pre %}
+    <div class="department-header relative">
+        <div class="row">
+            <div class="column-back">
+                <a href="{{ page.department.getAbsoluteUrl() }}" class="back-text">Назад</a>
+            </div>
+            <div class="column-title">
+                <h1>{{ page }}</h1>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block content %}
+    <div class="department-detail row">
+        <div class="columns large-8 department-page">
+            {% if page.price %}
+            <div class="price-container">
+                {{ page.price }}
+            </div>
+            {% endif %}
+
+            {{ page.content|safe }}
+
+            <p><a class="button back" href="{{ model.getAbsoluteUrl() }}">Вернуться</a></p>
+        </div>
+        <div class="columns large-4 department-sidebar">
+            {% set workers = model.workers.all() %}
+            {% if workers|length > 0 %}
+                <div class="owner-container no-margin">
+                    {% for worker in workers %}
+                        <div class="row">
+                            <div class="owner">
+                                {% if worker.photo.value %}
+                                    <div class="columns large-3">
+                                        <img src="{{ worker.photo.url_80x80 }}" alt=""/>
+                                    </div>
+                                    <div class="columns large-9">
+                                        <p class="role">{{ worker.role }}</p>
+                                        <p class="name">
+                                            {{ worker }}
+                                        </p>
+                                    </div>
+                                {% else %}
+                                    <div class="columns large-12">
+                                        <p class="role">{{ worker.role }}</p>
+                                        <p class="name">
+                                            {{ worker }}
+                                        </p>
+                                    </div>
+                                {% endif %}
+                                <p class="clear"></p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <ul class="department-contacts">
+                <li class="phone">
+                    Телефон:<br/>
+                    +7 (8332) 12-34-56
+                </li>
+                <li class="map">
+                    Киров, ул. Щорса, 64<br/>
+                    <a href="/pages/contacts">Показать на карте</a>
+                </li>
+            </ul>
+
+            <a class="button" href="#">
+                Скачать прайс-лист <span>(238 Кбайт)</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}

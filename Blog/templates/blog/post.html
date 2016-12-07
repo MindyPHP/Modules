@@ -1,0 +1,19 @@
+{% extends request.isAjax ? "ajax.html" : "blog/base.html" %}
+
+{% block content %}
+    <div class="blog-container">
+        <time datetime="{{ model.published_at }}">{{ model.published_at|humanizeDateTime }}</time>
+        <h1>{{ model.name }}</h1>
+
+        <article class="post-content">
+            {{ model.content|safe }}
+        </article>
+
+        {% if hasComments %}
+            <hr/>
+            <div class="comment-container">
+                {{ render_comments(request, "blog/_comments.html", model, model.comments)|safe }}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

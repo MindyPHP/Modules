@@ -1,0 +1,11 @@
+{% extends "forum/base.html" %}
+
+{% block content %}
+    <h1>{{ t('Forum', 'forum') }}</h1>
+
+    {% for model in models %}
+        <h4>{{ model }}</h4>
+        {% include "forum/_forum.html" with ['forums' => model.objects().children().all()] %}
+        {% if not loop.last %}<hr/>{% endif %}
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,9 @@
+{% for model in models %}
+    <li>
+        {% url 'catalog:list' model.url as url %}
+        <a href="{{ url }}"{% if url == request.path %} class="active"{% endif %}>{{ model.name }}</a>
+        {% if model.items|length > 0 %}
+            {% include "catalog/_navigation.html" with ['models' => model.items, 'nested' => nested+1] %}
+        {% endif %}
+    </li>
+{% endfor %}

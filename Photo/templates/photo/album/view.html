@@ -1,0 +1,19 @@
+{% extends "photo/base.html" %}
+
+{% block heading %}
+    <h1>{{ model }}</h1>
+{% endblock %}
+
+{% block content %}
+    <ul class="gallery-list large-block-grid-3">
+        {% for model in images %}
+            <li>
+                <a class="th" href="{{ model.file.url }}">
+                    <img src="{{ model.file.url_295x216 }}" alt="{{ model }}"/>
+                </a>
+            </li>
+        {% endfor %}
+    </ul>
+
+    {{ pager|safe }}
+{% endblock %}

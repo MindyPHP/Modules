@@ -1,0 +1,66 @@
+{% if comments %}
+    <section>
+        <ul class="comment-list no-bullet endless">
+            {% for comment in comments %}
+                <li class="level-{{ comment.level }}">
+                    <section class="comment-header">
+                        <span class="username">
+                            {% if comment.username %}
+                                {{ comment.username|e }}
+                            {% else %}
+                                {% if comment.user %}
+                                    {{ comment.user.username }}
+                                {% else %}
+                                    Гость
+                                {% endif %}
+                            {% endif %}
+                        </span>
+
+                        <span class="time">
+                            {{ comment.published_at|humanizeDateTime }}
+                        </span>
+                    </section>
+
+                    <section class="comment">
+                        {{ comment.comment|e }}
+                    </section>
+
+                    <section class="reply">
+                        <a class="reply-comment" href="#" data-reply="{{ comment.id }}">
+                            <i class="icon comment"></i> Ответить
+                        </a>
+                    </section>
+
+                    <section class="comment-form"></section>
+                </li>
+            {% endfor %}
+        </ul>
+    </section>
+{% endif %}
+
+<section class="endless-holder">
+    {{ pager.render("core/pager/endless.html")|safe }}
+</section>
+
+{% if not request.isAjax %}
+    {% if model.enable_comments_form %}
+        <section class="comments-form-holder">
+            <form method="post" action="{% url 'blog:comment_send' model.pk model.slug %}?_next={{ request.path }}" class="ajax-validation comments-form">
+                <h4>Оставить комментарий</h4>
+                {% csrf_token %}
+                <section class="row">
+                    <section class="column large-12">
+                        {{ form|raw }}
+
+                        <section class="button-reply">
+                            <input type="submit" class="ui button primary" value="Отправить"/>
+                            <span class="reply">
+                                Ответ пользователю: <span class="username"></span> <a href="#" class="no-reply">Отмена</a>
+                            </span>
+                        </section>
+                    </section>
+                </section>
+            </form>
+        </section>
+    {% endif %}
+{% endif %}

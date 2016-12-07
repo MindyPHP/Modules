@@ -1,0 +1,30 @@
+<?php
+
+return array (
+  'Bank' => 'Банк',
+  'Court' => 'Суд',
+  'Question' => 'Предмет спора',
+  'Result' => 'Результат',
+  'Document' => 'Документ',
+  'Is complete' => 'Успешно',
+  'Content' => 'Определение суда',
+  'Status' => 'Статус',
+  'Complete' => 'Решено',
+    'Successful' => 'Успешно',
+    'Regions' => 'Регионы',
+    'regions' => 'регионы',
+    'region' => 'регион',
+    'Comments' => 'Комментарии',
+    'comments' => 'комментарии',
+    'comment' => 'комментарий',
+    'bank' => 'банк',
+    'banks' => 'банки',
+    'Banks' => 'Банки',
+    'Name' => 'Наименование',
+    'Region' => 'Регион',
+    'solution' => 'решение',
+    'solutions' => 'решения',
+    'Solutions' => 'Решения',
+    'Main information' => 'Основная информация',
+    'Court solutions' => 'Судебные решения'
+);

@@ -1,0 +1,7 @@
+{% extends "solutions/base.html" %}
+
+{% block content %}
+    <h1>{{ model }}</h1>
+
+    {{ render_comments(request, "solutions/_comments.html", model, model.comments)|raw }}
+{% endblock %}

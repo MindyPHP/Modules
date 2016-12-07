@@ -1,0 +1,7 @@
+{% extends "workers/base.html" %}
+
+{% block content %}
+    {% for department in departments %}
+        {{ department.name }}
+    {% endfor %}
+{% endblock %}

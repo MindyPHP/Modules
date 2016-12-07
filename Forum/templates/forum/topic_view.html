@@ -1,0 +1,112 @@
+{% extends "forum/base.html" %}
+
+{% block content %}
+    <h1>{{ model }}</h1>
+    <p>{{ t('Views', 'forum') }}: {{ model.views_count }}</p>
+    <hr/>
+
+    <div class="row topic-detail{% if model.is_closed %} closed{% endif %}{% if model.is_sticky %} sticky{% endif %}">
+        <div class="columns large-2">
+            <div class="topic-user text-center">
+                <a href="{{ model.user.getAbsoluteUrl() }}">
+                    <img class="avatar" src="{{ model.user|gravatar }}" alt="{{ model.user }}"/><br/>
+                    <span class="username">{{ model.user }}</span>
+                </a>
+            </div>
+        </div>
+        <div class="columns large-10">
+            <div class="topic-content">
+                <p class="topic-panel">
+                    {% if user.pk == model.user.pk or user.can('forum:topic_delete') %}
+                    <a href="{% url 'forum:topic_delete' model.pk %}" class="delete right" data-confirm="{{ t('You really want to delete this topic?', 'forum') }}">&times;</a>
+                    {% endif %}
+                    {{ model.created_at }}
+                </p>
+                <div class="topic-text">
+                    {{ model.message_html|safe }}
+                </div>
+                <div class="topic-markdown hide">{{ model.message|safe }}</div>
+                {% if not user.isGuest %}
+                <div class="topic-buttons">
+                    <a href="#" class="forum-quote">{{ t('Quote', 'forum') }}</a>
+                    {% if user.pk == model.user.pk or user.can('forum:topic_update') %}
+                    <a href="{% url 'forum:topic_update' model.pk %}">{{ t('Edit', 'forum') }}</a>
+                    {% endif %}
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    {% if posts|length > 0 %}
+        {% for post in posts %}
+            <hr/>
+            <div class="row topic-detail">
+                <div class="columns large-2">
+                    <div class="topic-user text-center">
+                        <a href="{{ post.user.getAbsoluteUrl() }}">
+                            <img class="avatar" src="{{ post.user|gravatar }}" alt="{{ post.user }}"/><br/>
+                            <span class="username">{{ post.user }}</span>
+                        </a>
+                    </div>
+                </div>
+                <div class="columns large-10">
+                    <div class="topic-content">
+                        <p class="topic-panel">
+                            {% if user.pk == model.user.pk or user.can('forum:post_delete') %}
+                            <a href="{% url 'forum:post_delete' post.pk %}" class="delete right" data-confirm="{{ t('You really want to delete this post?', 'forum') }}">&times;</a>
+                            {% endif %}
+                            {{ post.created_at }} | <a name="{{ post.pk }}">#{{ post.pk }}</a>
+                        </p>
+                        <div class="topic-text">
+                            {{ post.content_html|safe }}
+                        </div>
+                        <div class="topic-markdown hide">{{ post.content|safe }}</div>
+                        {% if not user.isGuest %}
+                        <div class="topic-buttons">
+                            <a href="#" class="forum-quote">{{ t('Quote', 'forum') }}</a>
+                            {% endif %}
+                            {% if user.pk == post.user.pk or user.can('forum:post_update') %}
+                            <a href="{% url 'forum:post_update' post.pk %}">{{ t('Edit', 'forum') }}</a>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+                <p class="clear"></p>
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <hr/>
+
+    <div class="row">
+        <div class="columns large-2">
+            &nbsp;
+        </div>
+        <div class="columns large-8">
+            {{ pager.render()|safe }}
+        </div>
+
+        <div class="columns large-2">
+            &nbsp;
+        </div>
+    </div>
+
+    {% if user.isGuest %}
+        <div class="auth-required">
+            <h4 class="text-center">
+                <a href="{% url 'user:login' %}">{{ t('Sign in', 'user') }}</a> {{ t('or', 'forum') }}
+                <a href="{% url 'user:registration' %}">{{ t('sign up', 'forum') }}</a>
+                {{ t('for answer', 'forum') }}
+            </h4>
+        </div>
+    {% else %}
+        <h3>{{ t('Reply', 'forum') }}</h3>
+        <form action="{% url 'forum:topic_reply' forum.pk forum.slug model.pk %}" method="post">
+            {% csrf_token %}
+            <a class="right" href="{% url 'forum:topic_reply' forum.pk forum.slug model.pk %}">{{ t('Reply on new page', 'forum') }}</a>
+            {{ form|safe }}
+            <input type="submit" value="{{ t('Save', 'forum') }}" class="link-button" />
+        </form>
+    {% endif %}
+{% endblock %}

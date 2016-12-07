@@ -1,0 +1,26 @@
+{% extends "github/base.html" %}
+
+{% block content %}
+    <h1>{{ t('Releases', 'github') }}</h1>
+
+    <table>
+        <thead>
+        <tr>
+            <th>{{ t('Name', 'github') }}</th>
+            <th>{{ t('Version', 'github') }}</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for model in models %}
+            <tr>
+                <td>{{ model.name }}</td>
+                <td>
+                    {% if model.version %}
+                        {{ model.version }}
+                    {% endif %}
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,21 @@
+{% extends request.isAjax ? "ajax.html" : "faq/base.html" %}
+
+{% block content %}
+    <h1>Вопрос - ответ</h1>
+
+    <h2>Категории</h2>
+    <ul>
+        {% for category in categories %}
+            <li><a href="{{ category.getAbsoluteUrl() }}">{{ category }}</a></li>
+        {% endfor %}
+    </ul>
+
+    <h2>Вопросы</h2>
+    <ul>
+        {% for question in questions %}
+            <li><a href="{{ question.getAbsoluteUrl() }}">{{ question }}</a></li>
+        {% endfor %}
+    </ul>
+
+    {{ pager.render() }}
+{% endblock %}

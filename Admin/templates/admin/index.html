@@ -1,0 +1,15 @@
+{% extends "admin/base.html" %}
+
+{% block heading %}
+    <h1>{{ t('Dashboard', 'admin') }}</h1>
+{% endblock %}
+
+{% block content %}
+    <div class="row">
+        {% for dashboard in dashboards %}
+            <div class="columns {% for column in dashboard.getColumns() %}{{ column }} {% endfor %}">
+                {{ dashboard.render()|safe }}
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}

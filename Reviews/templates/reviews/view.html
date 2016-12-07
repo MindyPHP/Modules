@@ -1,0 +1,12 @@
+{% extends "reviews/base.html" %}
+
+{% block content %}
+    <section class="review">
+        <section class="review-name">
+            {{ model.name }}
+        </section>
+        <section class="review-description">
+            {{ model.content }}
+        </section>
+    </section>
+{% endblock %}

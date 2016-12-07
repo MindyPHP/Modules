@@ -1,0 +1,63 @@
+{% extends "places/base.html" %}
+
+{% block content %}
+    <div class="content-inner places-list-container">
+        <h1>{{ t('Places', 'places') }}</h1>
+
+        <ul class="places-list large-block-grid-2">
+            {% for model in models %}
+                <li>
+                    <div class="row">
+                        <div class="columns large-4">
+                            <a href="{{ model.getAbsoluteUrl() }}">
+                                {% if model.image and model.image.image.value %}
+                                    <img src="{{ model.image.image.url_130x130 }}" alt="{{ model }}"/>
+                                {% else %}
+                                    <img src="http://placehold.it/130x130" alt="{{ model }}"/>
+                                {% endif %}
+                            </a>
+                        </div>
+                        <div class="columns large-8">
+                            <h4><a href="{{ model.getAbsoluteUrl() }}">{{ model }}</a></h4>
+
+                            <p class="address"><strong>Адрес:</strong> {{ model.address }}</p>
+
+                            <p class="places-content-short">{{ model.content_short }}</p>
+                        </div>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="places-list-container">
+        <h2 class="map-title">Площадки на карте</h2>
+        <div id="map"></div>
+        <script src='//api-maps.yandex.ru/2.1/?lang=ru_RU' type='text/javascript'></script>
+        <script type='text/javascript'>
+            function yandexMapInit() {
+                var yandexMap = new ymaps.Map('map', {
+                    center: [58.597861, 49.607306],
+                    zoom: 12,
+                    controls: ['zoomControl']
+                });
+
+                {% for model in models %}
+                yandexMap.geoObjects.add(new ymaps.Placemark([{{ model.lat }}, {{ model.lng }}], {
+                    balloonContentHeader: "{{ model }}",
+                    balloonContentBody: "{{ model.address }}<br/><a href='{{ model.getAbsoluteUrl() }}'>Подробнее</a>",
+                    balloonContentFooter: "",
+                    hintContent: "{{ model }}"
+                }, {
+                    iconLayout: 'default#image',
+                    iconImageHref: '/static/dist/images/main/placemark.png',
+                    iconImageSize: [28, 36],
+                    iconImageOffset: [-14, -18]
+                }));
+                {% endfor %}
+            }
+            ymaps.ready(yandexMapInit);
+        </script>
+        <p>&nbsp;</p>
+    </div>
+{% endblock %}

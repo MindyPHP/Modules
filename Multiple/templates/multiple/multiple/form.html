@@ -1,0 +1,5 @@
+<form action="{{ request.getPath() }}" method="post">
+    {% csrf_token %}
+    {{ form.asBlock()|safe }}
+    <button class="button" type="submit">{{ t('Save', 'core') }}</button>
+</form>

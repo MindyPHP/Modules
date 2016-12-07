@@ -1,0 +1,11 @@
+<ul class="forum-list">
+    {% for forum in forums %}
+    <li>
+        <span class="forum-list-panel right">
+            {{ t('Topics', 'forum') }}: {{ forum.topics_count }} / {{ t('Replies', 'forum') }}: {{ forum.replies_count }}
+        </span>
+        <a href="{{ forum.getAbsoluteUrl() }}">{{ forum.name }}</a>
+        <span class="forum-message">{{ forum.description|truncate(100) }}</span>
+    </li>
+    {% endfor %}
+</ul>

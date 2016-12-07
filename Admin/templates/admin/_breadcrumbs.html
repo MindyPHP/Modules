@@ -1,0 +1,19 @@
+<ul class="breadcrumbs--list">
+    {% for bc in this.breadcrumbs %}
+        <li>
+            <span class="breadcrumbs--item">
+                {% if bc.url and not loop.last %}
+                    <a class="section{% if bc.items|length > 1 %} breadcrumb-nested{% endif %}"
+                       href="{{ bc.url }}">{{ bc.name|trim }}</a>
+                {% else %}
+                    {{ bc.name|trim }}
+                {% endif %}
+            </span>
+        </li>
+        {% if not loop.last %}
+            <li>
+                <span class="breadcrumbs--item__arrow">&rarr;</span>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ul>

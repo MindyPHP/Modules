@@ -1,0 +1,11 @@
+{% extends "user/base.html" %}
+
+{% block content %}
+    <h1>{{ t('Update profile', 'user') }}</h1>
+
+    <form action="{% url 'user:profile_update' %}">
+        {% csrf_token %}
+        {{ form|safe }}
+        <input type="submit" class="button" value="{{ t('Save', 'user') }}"/>
+    </form>
+{% endblock %}

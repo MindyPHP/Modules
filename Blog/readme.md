@@ -1,0 +1,2 @@
+Mindy blog module
+==================

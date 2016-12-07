@@ -1,0 +1,222 @@
+{% extends request.isAjax ? "ajax.html" : "base.html" %}
+
+{% block content %}
+<section class="project-info">
+    <section class="title">
+        {{ project.name }}
+    </section>
+
+    <dl class="tabs" data-tab>
+        <dd class="active"><a href="#project-actions">Действия</a></dd>
+        <dd><a href="#project-debts">Долги</a></dd>
+        <dd><a href="#project-requisites">Реквизиты</a></dd>
+        <dd><a href="#project-contacts">Контакты</a></dd>
+    </dl>
+    <div class="tabs-content">
+        <div class="content active project-actions" id="project-actions">
+            <section class="project-actions-form">
+                <section class="row expand">
+                    <input type="hidden" id="action-project" name="projects[]" value="{{ project.id }}"/>
+                    <section class="column large-4">
+                        <label for="action-document">Документ:</label>
+                        <select name="document" id="action-document">
+                            <option value="{% url 'crm.act_wo_date' %}">Акт</option>
+                            <option value="{% url 'crm.account_wo_date' %}">Счет</option>
+                        </select>
+                    </section>
+                    <section class="column large-4">
+                        <label for="action-date">За месяц:</label>
+                        <select name="date" id="action-date">
+                            {% for date in dates %}
+                                <option value="{{ date.format('Y-m-01') }}">
+                                    {{ formatter.format('LLLL yyyy', date.getTimestamp()) }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </section>
+                    <section class="column large-4">
+                        <a class="button oval" href="#" target="_blank" id="action-button">
+                            Сформировать
+                        </a>
+                    </section>
+                </section>
+            </section>
+            <section class="project-actions-list">
+                <ul class="actions no-bullet">
+                    {% for date, action_list in actions %}
+                        {% set time = date|date('U') %}
+                        {% for action in action_list %}
+                            <li class="action">
+                                <section class="row expand">
+                                    <section class="column large-6">
+                                        <section class="action-date">
+                                            {{ formatter.format('d MMMM yyyy', time) }}
+                                        </section>
+                                        <section class="action-verbose">
+                                            {{ action.verbose }} за {{ formatter.format('LLLL yyyy', action.date.getTimestamp()) }}
+                                        </section>
+                                    </section>
+                                    <section class="column large-6">
+                                        <a class="button transparent oval expand" target="_blank" href="{% if action.status %}{% url 'crm.act' action.date.format('Y-m-d') %}{% else %}{% url 'crm.account' action.date.format('Y-m-d') %}{% endif %}?projects[]={{ project.id }}">
+                                            Сформировать повторно
+                                        </a>
+                                    </section>
+                                </section>
+                            </li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </section>
+        </div>
+
+        <div class="content" id="project-debts">
+
+            <section class="project-block">
+                <section class="project-header">
+                    <section class="small">
+                        Сумма долга
+                    </section>
+                    <section class="big">
+                        {{ debtSum|number_format(0,',',' ') }} рублей за {{ debtMonths }} мес.
+                    </section>
+                </section>
+                <section class="project-table-holder">
+                    <table class="project-table">
+                        {% for date, project_debts in debts %}
+                            <tr>
+                                <td>
+                                    {% set timestamp = date|date('U') %}
+                                    {{ formatter.format('LLLL yyyy', timestamp) }}
+                                </td>
+                                <td class="text-right">
+                                    {% for debt in project_debts %}
+                                        <a target="_blank" href="{% if debt.action == 'act' %}{% url 'crm.act' date %}{% else %}{% url 'crm.account' date %}{% endif %}?projects[]={{ project.id }}">
+                                            {{ debt.name }}</a>{% if not loop.last %},
+                                        {% endif %}
+                                    {% endfor %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </table>
+                </section>
+            </section>
+        </div>
+        <div class="content" id="project-requisites">
+            <section class="project-block">
+                <section class="project-header">
+                    <section class="small">
+                        Наименование организации
+                    </section>
+                    <section class="big">
+                        {{ project.customer_fullname }}
+                    </section>
+                </section>
+                <section class="project-table-holder">
+                    <table class="project-table">
+                        {% if project.inn %}
+                            <tr>
+                                <td>ИНН</td>
+                                <td>{{ project.inn }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if project.kpp %}
+                            <tr>
+                                <td>КПП</td>
+                                <td>{{ project.kpp }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if project.ogrn %}
+                            <tr>
+                                <td>ОГРН/ОГРНИП</td>
+                                <td>{{ project.ogrn }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if project.legal_address %}
+                            <tr>
+                                <td>Юридический адрес</td>
+                                <td>{{ project.legal_address }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if project.post_address %}
+                            <tr>
+                                <td>Почтовый адрес</td>
+                                <td>{{ project.post_address }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if project.email %}
+                            <tr>
+                                <td>E-mail</td>
+                                <td>
+                                    <a href="mailto:{{ project.email }}">
+                                        {{ project.email }}
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endif %}
+                        {% if project.phone %}
+                            <tr>
+                                <td>Телефон</td>
+                                <td>{{ project.phone }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if project.phone %}
+                            <tr>
+                                <td>Телефон</td>
+                                <td>{{ project.phone }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if project.settlement_account %}
+                            <tr>
+                                <td>Расчетный счет</td>
+                                <td>{{ project.settlement_account }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if project.bank_name %}
+                            <tr>
+                                <td>Наименование банка</td>
+                                <td>{{ project.bank_account }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if project.bank_account %}
+                            <tr>
+                                <td>Корр счет</td>
+                                <td>{{ project.bank_account }}</td>
+                            </tr>
+                        {% endif %}
+                        {% if project.bik %}
+                            <tr>
+                                <td>БИК</td>
+                                <td>{{ project.bik }}</td>
+                            </tr>
+                        {% endif %}
+                    </table>
+                </section>
+            </section>
+        </div>
+        <div class="content" id="project-contacts">
+
+        </div>
+    </div>
+
+    <script>
+        $(function(){
+            $(document).foundation();
+
+            function updateActionButton()
+            {
+                var $button = $('#action-button');
+                var url = $('#action-document').val();
+                var date = $('#action-date').val();
+                var data = $('#action-project').serialize();
+                $button.attr('href', url + date + '?' + data);
+                return true;
+            }
+
+            $('.project-actions-form select').on('change', function(){
+                updateActionButton();
+            });
+            $('#action-document').trigger('change');
+        });
+    </script>
+</section>
+{% endblock %}

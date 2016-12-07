@@ -1,0 +1,38 @@
+<form action="" method="get">
+    <table class="table--toolbar">
+        <thead>
+        <tr>
+            <th class="buttons">Действия</th>
+            {% if admin.searchFields|length > 0 %}
+                <th class="search">Поиск</th>
+            {% endif %}
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td class="buttons">
+                {% if admin.can('create') %}
+                    <a href="{{ admin.getAdminUrl('create') }}" class="button button-primary button-small">
+                        <i class="icon add square"></i>
+                        {{ t('Create', 'admin') }}
+                    </a>
+                {% endif %}
+                <a href="{{ admin.getAdminUrl('export') }}" target="_blank"
+                   class="button basic button-small">
+                    <i class="icon download"></i>
+                    {{ t('Export', 'admin') }}
+                </a>
+            </td>
+            {% if admin.searchFields|length > 0 %}
+                <td class="search">
+                    <input type="text" name="search" placeholder="{{ t('Search','admin') }}..."
+                           value="{{ request.get.get('search') }}"/>
+                    <button type="submit" class="ui button tiny primary icon">
+                        <i class="search icon"></i> {{ t('Search', 'admin') }}
+                    </button>
+                </td>
+            {% endif %}
+        </tr>
+        </tbody>
+    </table>
+</form>

@@ -1,0 +1,14 @@
+{% extends "wiki/base.html" %}
+
+{% block content %}
+    <a class="link-button right" href="{% url 'wiki:update' model.url %}">{{ t('Update', 'wiki') }}</a>
+    <h1>{{ model }}</h1>
+
+    {% if not model.is_complete %}
+        <div class="wiki-not-complete">
+            {{ t('Warning! Article is not complete.', 'wiki') }}
+        </div>
+    {% endif %}
+
+    {{ model.content_html|safe|wiki_links }}
+{% endblock %}

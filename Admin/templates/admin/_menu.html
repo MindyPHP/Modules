@@ -1,0 +1,25 @@
+{% set modules = get_modules_menu() %}
+<div class="modules">
+    <div class="row">
+        <div class="columns small-12">
+            {% if modules|length > 0 %}
+                <input type="search" class="modules__search" placeholder="{{ t('Search...', 'admin') }}"/>
+                <hr/>
+                <ul class="modules__list">
+                    {% for name, item in modules %}
+                        <li>
+                            {% for url in item.urls %}
+                                <div class="modules__item">
+                                    <a href="{{ url }}" rel="tooltip" title="{{ item.description }}">{{ name }}</a>
+                                </div>
+                                {% break %}
+                            {% endfor %}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+                <p>Доступные модули отсутствуют</p>
+            {% endif %}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,110 @@
+{% extends "clinic/base.html" %}
+
+{% block pre %}
+    <div class="department-header">
+        <div class="row">
+            <div class="columns large-1">
+                <a href="/" class="back"></a>
+            </div>
+            <div class="columns large-11">
+                <h1>{{ model }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="header-background backstretch"
+         data-src="{% if model.image.value %}{{ model.image.url }}{% else %}http://placehold.it/1920x462{% endif %}"></div>
+{% endblock %}
+
+{% block content %}
+    <div class="department-detail row">
+        <div class="columns large-8">
+            <dl class="tabs" data-tab>
+                <dd class="active"><a href="#panel1">Информация</a></dd>
+                {% if model.prices|striptags|trim|length > 0 %}
+                <dd><a href="#panel2">Цены</a></dd>
+                {% endif %}
+            </dl>
+            <div class="tabs-content">
+                <div class="content active" id="panel1">
+                    {{ model.content|safe }}
+
+                    <div class="department-pages">
+                        {% for category in model.categories.all() %}
+                            <h4>{{ category }}</h4>
+                            <ul class="no-bullet">
+                                {% for page in category.pages.all() %}
+                                    <li>
+                                        {% if page.url or page.content|striptags|trim|length > 0 %}
+                                            &mdash; <a href="{% if page.url %}{{ page.url }}{% else %}{{ page.getAbsoluteUrl() }}{% endif %}">{{ page }}</a>
+                                        {% else %}
+                                            &mdash; {{ page }}
+                                        {% endif %}
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% endfor %}
+                    </div>
+
+                    {{ model.content_after|safe }}
+                </div>
+                {% if model.prices|striptags|trim|length > 0 %}
+                <div class="content" id="panel2">
+                    {{ model.prices|safe }}
+                </div>
+                {% endif %}
+            </div>
+
+        </div>
+        <div class="columns large-4 department-sidebar">
+            {% set workers = model.workers.all() %}
+            {% if workers|length > 0 %}
+            <div class="owner-container">
+                {% for worker in workers %}
+                <div class="row">
+                    <div class="owner">
+                        {% if worker.photo.value %}
+                            <div class="columns large-3">
+                                <img src="{{ worker.photo.url_80x80 }}" alt=""/>
+                            </div>
+                            <div class="columns large-9">
+                                <p class="role">{{ worker.role }}</p>
+                                <p class="name">
+                                    {{ worker }}
+                                </p>
+                            </div>
+                        {% else %}
+                            <div class="columns large-12">
+                                <p class="role">{{ worker.role }}</p>
+                                <p class="name">
+                                    {{ worker }}
+                                </p>
+                            </div>
+                        {% endif %}
+                        <p class="clear"></p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+
+            <ul class="department-contacts">
+                <li class="phone">
+                    Телефон:<br/>
+                    {{ model.phone }}
+                </li>
+                <li class="map">
+                    {% if model.pk == 3 %}
+                        Киров, ул. Володарского, 161<br/>
+                    {% else %}
+                        Киров, ул. Щорса, 64<br/>
+                    {% endif %}
+                    <a href="/pages/contacts">Показать на карте</a>
+                </li>
+            </ul>
+
+            <a class="button" href="/price.pdf">
+                Скачать прайс-лист <span>(1.2 Мб)</span>
+            </a>
+        </div>
+    </div>
+{% endblock %}
